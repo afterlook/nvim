@@ -1,9 +1,7 @@
 -- [[ Sethhing options ]]
 -- See `:help vim.o`
 
-local set = vim.opt
-
--- Tabs
+local set = vim.opt -- Tabs
 local tab_width = 4
 set.tabstop = tab_width
 set.softtabstop = tab_width
@@ -11,7 +9,6 @@ set.shiftwidth = tab_width
 
 -- Relative  lines
 set.relativenumber = true
-
 -- Set highlight on search
 vim.o.hlsearch = false
 
@@ -65,10 +62,10 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 })
 
 -- Diagnostic keymaps
-vim.keymap.set("n", "[d", vim.diagnostic.goto_prev)
-vim.keymap.set("n", "]d", vim.diagnostic.goto_next)
-vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float)
-vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist)
+-- vim.keymap.set("n", "[d", vim.diagnostic.goto_prev)
+-- vim.keymap.set("n", "]d", vim.diagnostic.goto_next)
+-- vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float)
+-- vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist)
 
 -- Switching panes
 --vim.keymap.set("n", "<c-h>", ":wincmd h<CR>", { silent = true })
@@ -87,3 +84,31 @@ set.guicursor = "n-v-c:blinkon100"
 
 -- center cursor
 set.scrolloff = 50
+
+-- Jump to last accessed window on closing the current one
+WinCloseJmp = function ()
+  -- Exclude floating windows
+  if '' ~= vim.api.nvim_win_get_config(0).relative then return end
+  -- Record the window we jump from (previous) and to (current)
+  if nil == vim.t.winid_rec then
+    vim.t.winid_rec = { prev = vim.fn.win_getid(), current = vim.fn.win_getid() }
+  else
+    vim.t.winid_rec = { prev = vim.t.winid_rec.current, current = vim.fn.win_getid() }
+  end
+
+  -- Loop through all windows to check if the previous one has been closed
+  for winnr=1,vim.fn.winnr('$') do
+    if vim.fn.win_getid(winnr) == vim.t.winid_rec.prev then
+      return        -- Return if previous window is not closed
+    end
+  end
+
+  vim.cmd [[ wincmd p ]]
+end
+
+vim.cmd [[ autocmd VimEnter,WinEnter * lua WinCloseJmp() ]]
+
+vim.keymap.set("n", "<c-q>", ":bd<CR>", { silent = true })
+
+-- disable mouse
+vim.opt.mouse = "a"
