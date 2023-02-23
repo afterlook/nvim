@@ -4,7 +4,8 @@
 local M = {}
 
 function M.on_attach(client, bufnr)
-  client.resolved_capabilities.document_formatting = false
+  client.server_capabilities.document_formatting = false
+  client.server_capabilities.documentFormattingProvider = false
 
   -- enable illuminate to intelligently highlight
   require("illuminate").on_attach(client)
@@ -113,7 +114,7 @@ function M.on_attach(client, bufnr)
 end
 
 -- Enable the following language servers
-local servers = { "clangd", "rust_analyzer", "pyright", "tsserver", "sumneko_lua", "gopls" }
+local servers = { "clangd", "rust_analyzer", "lua_ls", "gopls", "pyright", "tsserver", "hls" }
 
 -- Ensure the servers above are installed
 require("nvim-lsp-installer").setup({
@@ -130,7 +131,7 @@ vim.g.coq_settings = {
 }
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
+capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 
 for _, lsp in ipairs(servers) do
   require("lspconfig")[lsp].setup({
@@ -149,7 +150,7 @@ local runtime_path = vim.split(package.path, ";")
 table.insert(runtime_path, "lua/?.lua")
 table.insert(runtime_path, "lua/?/init.lua")
 
-require("lspconfig").sumneko_lua.setup({
+require("lspconfig").lua_ls.setup({
   on_attach = M.on_attach,
   capabilities = capabilities,
   settings = {
