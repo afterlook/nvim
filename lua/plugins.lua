@@ -166,6 +166,16 @@ require("packer").startup(function(use)
 
   use {"akinsho/toggleterm.nvim", tag = '*', config = get_config("toggleterm")}
 
+  use {"haskell/haskell-language-server", config = get_config("hls")}
+
+  use {
+    "williamboman/mason.nvim",
+    "williamboman/mason-lspconfig.nvim",
+    config = function()
+      require("mason").setup()
+    end
+  }
+
   if is_bootstrap then
     require("packer").sync()
   end

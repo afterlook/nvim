@@ -12,6 +12,7 @@ nls.setup({
     nls.builtins.formatting.black,
     nls.builtins.formatting.gofmt,
     nls.builtins.formatting.goimports,
+    nls.builtins.formatting.fourmolu,
     nls.builtins.formatting.latexindent.with({
       extra_args = { "-g", "/dev/null" }, -- https://github.com/cmhughes/latexindent.pl/releases/tag/V3.9.3
     }),
@@ -55,7 +56,7 @@ nls.setup({
             end,
           }
 
-          vim.lsp.buf.formatting_sync()
+          vim.lsp.buf.format()
         end,
       })
     end
