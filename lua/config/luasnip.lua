@@ -55,4 +55,3 @@ vim.keymap.set("i", "<c-h>", function()
     ls.change_choice(1)
   end
 end)
-
