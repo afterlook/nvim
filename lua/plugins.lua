@@ -166,14 +166,35 @@ require("packer").startup(function(use)
 
   use {"akinsho/toggleterm.nvim", tag = '*', config = get_config("toggleterm")}
 
-  use {"haskell/haskell-language-server", config = get_config("hls")}
+  use {"haskell/haskell-language-server"}
 
   use {
     "williamboman/mason.nvim",
-    "williamboman/mason-lspconfig.nvim",
-    config = function()
-      require("mason").setup()
-    end
+    requires = "williamboman/mason-lspconfig.nvim",
+    config = get_config("mason")
+  }
+
+  use {
+    "ThePrimeagen/harpoon",
+    config = get_config("harpoon")
+  }
+
+  use {
+    "rcarriga/nvim-notify",
+    config = get_config("notify")
+  }
+
+  use {
+    "folke/noice.nvim",
+    requires = {
+      -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
+      "MunifTanjim/nui.nvim",
+      -- OPTIONAL:
+      --   `nvim-notify` is only needed, if you want to use the notification view.
+      --   If not available, we use `mini` as the fallback
+      "rcarriga/nvim-notify",
+    },
+    config = get_config("noice"),
   }
 
   if is_bootstrap then

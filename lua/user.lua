@@ -86,9 +86,11 @@ set.guicursor = "n-v-c:blinkon100"
 set.scrolloff = 50
 
 -- Jump to last accessed window on closing the current one
-WinCloseJmp = function ()
+WinCloseJmp = function()
   -- Exclude floating windows
-  if '' ~= vim.api.nvim_win_get_config(0).relative then return end
+  if "" ~= vim.api.nvim_win_get_config(0).relative then
+    return
+  end
   -- Record the window we jump from (previous) and to (current)
   if nil == vim.t.winid_rec then
     vim.t.winid_rec = { prev = vim.fn.win_getid(), current = vim.fn.win_getid() }
@@ -97,16 +99,16 @@ WinCloseJmp = function ()
   end
 
   -- Loop through all windows to check if the previous one has been closed
-  for winnr=1,vim.fn.winnr('$') do
+  for winnr = 1, vim.fn.winnr("$") do
     if vim.fn.win_getid(winnr) == vim.t.winid_rec.prev then
-      return        -- Return if previous window is not closed
+      return -- Return if previous window is not closed
     end
   end
 
-  vim.cmd [[ wincmd p ]]
+  vim.cmd([[ wincmd p ]])
 end
 
-vim.cmd [[ autocmd VimEnter,WinEnter * lua WinCloseJmp() ]]
+vim.cmd([[ autocmd VimEnter,WinEnter * lua WinCloseJmp() ]])
 
 vim.keymap.set("n", "<c-q>", ":bd<CR>", { silent = true })
 
