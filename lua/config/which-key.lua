@@ -1,4 +1,5 @@
 local wk = require("which-key")
+local gs = require("gitsigns")
 local default_options = { silent = true }
 
 -- Register all leader based mappings
@@ -36,7 +37,26 @@ wk.register({
   },
   g = {
     name = "Git",
-    b = { "<cmd>:GitBlameToggle<cr>", "Blame" },
+    a = { "<cmd>G add .<cr>", "Add all" },
+    s = { "<cmd>G status<cr>", "Status" },
+    c = { "<cmd>G commit --signoff<cr>", "Commit buffer" },
+    P = { "<cmd>G push<cr>", "Push" },
+    S = { gs.stage_buffer, "Stage buffer" },
+    u = { gs.undo_stage_hunk, "Undo stage hunk" },
+    r = {
+      name = "Reset",
+      R = { gs.reset_buffer, "Reset buffer" },
+    },
+    p = { gs.preview_hunk, "Preview hunk" },
+    B = {
+      function()
+        gs.blame_line({ full = true })
+      end,
+      "Blame full",
+    },
+    b = { gs.toggle_current_line_blame, "Blame line" },
+    D = { gs.diffthis, "Diff" },
+    d = { gs.toggle_deleted, "Show deleted" },
   },
   q = {
     name = "Quit",
