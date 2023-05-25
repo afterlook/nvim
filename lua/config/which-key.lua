@@ -2,13 +2,15 @@ local wk = require("which-key")
 local gs = require("gitsigns")
 local default_options = { silent = true }
 
+local function createGitBranch()
+  local branchName = vim.fn.input("New branch name: ")
+  vim.cmd("G checkout -b" .. branchName)
+end
+
 -- Register all leader based mappings
 wk.register({
   ["<Tab>"] = { "<cmd>e#<cr>", "Prev buffer" },
-  ["<leader>"] = {
-    name = "Leader",
-    a = { "<cmd>lua print('fasfAS')<cr>", "test" },
-  },
+  ["<leader>"] = { name = "Leader", a = { "<cmd>lua print('fasfAS')<cr>", "test" } },
   f = {
     name = "Files",
     b = { "<cmd>Telescope file_browser<cr>", "File browser" },
@@ -41,20 +43,23 @@ wk.register({
     s = { "<cmd>G status<cr>", "Status" },
     c = { "<cmd>G commit --signoff<cr>", "Commit buffer" },
     P = { "<cmd>G push<cr>", "Push" },
+    p = { "<cmd>G pull<cr>", "Pull" },
+    l = { "<cmd>G log<cr>", "Log" },
+    b = { "<cmd>GBranches<cr>", "Branch switch" },
+    n = { createGitBranch, "New branch" },
     S = { gs.stage_buffer, "Stage buffer" },
     u = { gs.undo_stage_hunk, "Undo stage hunk" },
     r = {
       name = "Reset",
       R = { gs.reset_buffer, "Reset buffer" },
     },
-    p = { gs.preview_hunk, "Preview hunk" },
-    B = {
+    BB = {
       function()
         gs.blame_line({ full = true })
       end,
       "Blame full",
     },
-    b = { gs.toggle_current_line_blame, "Blame line" },
+    B = { "<cmd>:GitBlameToggle<cr>", "Blame line" },
     D = { gs.diffthis, "Diff" },
     d = { gs.toggle_deleted, "Show deleted" },
   },

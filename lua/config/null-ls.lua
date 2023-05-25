@@ -17,7 +17,6 @@ nls.setup({
       extra_args = { "-g", "/dev/null" }, -- https://github.com/cmhughes/latexindent.pl/releases/tag/V3.9.3
     }),
     nls.builtins.code_actions.shellcheck,
-    nls.builtins.diagnostics.vale,
   },
   on_attach = function(client, bufnr)
     if client.supports_method("textDocument/formatting") then
