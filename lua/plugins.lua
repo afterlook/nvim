@@ -19,6 +19,9 @@ require("packer").startup(function(use)
   -- Git commands in nvim
   use "tpope/vim-fugitive"
 
+  -- Just for checkouts
+  use 'stsewd/fzf-checkout.vim'
+
   -- Fugitive-companion to interact with github use "tpope/vim-rhubarb"
 
   -- Add git related info in the signs columns and popups
@@ -195,6 +198,11 @@ require("packer").startup(function(use)
       "rcarriga/nvim-notify",
     },
     config = get_config("noice"),
+  }
+
+  use {
+    "python-lsp/python-lsp-server",
+    config = get_config("pylsp"),
   }
 
   if is_bootstrap then
