@@ -205,6 +205,10 @@ require("packer").startup(function(use)
     config = get_config("pylsp"),
   }
 
+  use {
+    "christoomey/vim-tmux-navigator",
+  }
+
   if is_bootstrap then
     require("packer").sync()
   end
