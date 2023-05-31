@@ -119,4 +119,5 @@ require("go").setup({
   run_in_floaterm = false, -- set to true to run in float window.
   -- float term recommended if you use richgo/ginkgo with terminal color
   luasnip = true,
+  iferr_vertical_shift = 2,
 })

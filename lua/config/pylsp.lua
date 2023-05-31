@@ -1,6 +1,4 @@
-local pylsp = require("pylsp")
-
-pylsp.setup({
+require'lspconfig'.pylsp.setup({
   plugins = {
     rope = {
       autoimport = {
