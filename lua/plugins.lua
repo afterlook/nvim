@@ -152,6 +152,8 @@ require("packer").startup(function(use)
 
   use({ "ray-x/go.nvim", requires = "ray-x/guihua.lua", config = get_config("go"), ft = { "go" } })
 
+  use({ "fatih/vim-go" })
+
   use {
     "gfanto/fzf-lsp.nvim",
     requires = "nvim-lua/plenary.nvim"

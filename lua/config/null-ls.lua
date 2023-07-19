@@ -6,7 +6,7 @@ nls.setup({
     nls.builtins.formatting.stylua.with({ extra_args = { "--indent-type", "Spaces", "--indent-width", "2" } }),
     nls.builtins.diagnostics.eslint_d,
     nls.builtins.formatting.prettier.with({
-      extra_args = { "--single-quote", "false" },
+      extra_args = { "--single-quote", "true" },
     }),
     nls.builtins.formatting.terraform_fmt,
     nls.builtins.formatting.black,

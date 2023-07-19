@@ -114,7 +114,17 @@ function M.on_attach(client, bufnr)
 end
 
 -- Enable the following language servers
-local servers = { "clangd", "rust_analyzer", "lua_ls", "gopls", "pylsp", "tsserver", "hls", "marksman" }
+local servers = {
+  "clangd",
+  "rust_analyzer",
+  "lua_ls",
+  "gopls",
+  "pylsp",
+  "tsserver",
+  "hls",
+  "marksman",
+  "typescript-language-server",
+}
 
 -- Ensure the servers above are installed
 require("nvim-lsp-installer").setup({
