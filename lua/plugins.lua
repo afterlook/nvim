@@ -1,9 +1,9 @@
 -- Install packer
-local install_path = vim.fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
+local install_path = vim.fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
 local is_bootstrap = false
 if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
   is_bootstrap = true
-  vim.fn.execute("!git clone https://github.com/wbthomason/packer.nvim " .. install_path)
+  vim.fn.execute('!git clone https://github.com/wbthomason/packer.nvim ' .. install_path)
   vim.cmd([[packadd packer.nvim]])
 end
 
@@ -57,6 +57,9 @@ require("packer").startup(function(use)
       "hrsh7th/cmp-calc",
       "lukas-reineke/cmp-rg",
       "hrsh7th/cmp-nvim-lsp-signature-help",
+      "hrsh7th/cmp-nvim-lua",
+      "hrsh7th/cmp-vsnip",
+      "hrsh7th/vim-vsnip",
     },
     config = get_config("cmp"),
   })
@@ -67,7 +70,6 @@ require("packer").startup(function(use)
     requires = "saadparwaiz1/cmp_luasnip",
     config = get_config("luasnip"),
   })
-
   -- Theme inspired by Atom
   use "mjlbach/onedark.nvim"
 
@@ -92,7 +94,7 @@ require("packer").startup(function(use)
 
   use({ "jose-elias-alvarez/null-ls.nvim", config = get_config("null-ls") })
 
-  use({ "kyazdani42/nvim-tree.lua", requires = { "kyazdani42/nvim-web-devicons" }, config = get_config("nvim-tree") })
+  use({ "kyazdani42/nvim-tree.lua", requires = { "kyazdani42/nvim-web-devicons" }, config = get_config("nvim-tree"), branch = "master" })
 
   use({ "glepnir/dashboard-nvim", config = get_config("dashboard") })
 
@@ -211,6 +213,20 @@ require("packer").startup(function(use)
     "christoomey/vim-tmux-navigator",
   }
 
+  -- rust
+  use {
+    "simrat39/rust-tools.nvim",
+    config = get_config("rust-tools"),
+  }
+  -- end rust
+
+  use {
+    '/home/kkulgawczuk/projects/opensource/hop.nvim',
+    -- 'phaazon/hop.nvim',
+    branch = 'v2', -- optional but strongly recommended
+    config = get_config("hop"),
+  }
+
   if is_bootstrap then
     require("packer").sync()
   end
@@ -222,18 +238,18 @@ end)
 --
 -- You"ll need to restart nvim, and then it will work.
 if is_bootstrap then
-  print("==================================")
-  print("    Plugins are being installed")
-  print("    Wait until Packer completes,")
-  print("       then restart nvim")
-  print("==================================")
+  print('==================================')
+  print('    Plugins are being installed')
+  print('    Wait until Packer completes,')
+  print('       then restart nvim')
+  print('==================================')
   return
 end
 
 -- Automatically source and re-compile packer whenever you save this plugins.lua
-local packer_group = vim.api.nvim_create_augroup("Packer", { clear = true })
-vim.api.nvim_create_autocmd("BufWritePost", {
-  command = "source <afile> | PackerCompile",
+local packer_group = vim.api.nvim_create_augroup('Packer', { clear = true })
+vim.api.nvim_create_autocmd('BufWritePost', {
+  command = 'source <afile> | PackerCompile',
   group = packer_group,
-  pattern = vim.fn.expand("$MYVIMRC"),
+  pattern = vim.fn.expand('$MYVIMRC'),
 })
