@@ -3,7 +3,9 @@ local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 
 nls.setup({
   sources = {
-    nls.builtins.formatting.stylua.with({ extra_args = { "--indent-type", "Spaces", "--indent-width", "2" } }),
+    nls.builtins.formatting.stylua.with({
+      extra_args = { "--indent-type", "Spaces", "--indent-width", "2", "--quote-style", "AutoPreferDouble" },
+    }),
     nls.builtins.diagnostics.eslint_d,
     nls.builtins.formatting.prettier.with({
       extra_args = { "--single-quote", "true" },
@@ -13,6 +15,7 @@ nls.setup({
     nls.builtins.formatting.gofmt,
     nls.builtins.formatting.goimports,
     nls.builtins.formatting.fourmolu,
+    nls.builtins.formatting.rustfmt,
     nls.builtins.formatting.latexindent.with({
       extra_args = { "-g", "/dev/null" }, -- https://github.com/cmhughes/latexindent.pl/releases/tag/V3.9.3
     }),
