@@ -221,9 +221,8 @@ require("packer").startup(function(use)
   -- end rust
 
   use {
-    '/home/kkulgawczuk/projects/opensource/hop.nvim',
-    -- 'phaazon/hop.nvim',
-    branch = 'v2', -- optional but strongly recommended
+    'smoka7/hop.nvim',
+    branch = 'master',
     config = get_config("hop"),
   }
 

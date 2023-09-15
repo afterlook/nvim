@@ -19,6 +19,13 @@ rt.setup({
         },
       }, { prefix = "<leader>", mode = "n", default_options })
     end,
+    settings = {
+      ["rust-analyzer"] = {
+        checkOnSave = {
+          command = "clippy",
+        },
+      },
+    },
   },
 })
 

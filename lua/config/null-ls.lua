@@ -4,7 +4,7 @@ local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 nls.setup({
   sources = {
     nls.builtins.formatting.stylua.with({
-      extra_args = { "--indent-type", "Spaces", "--indent-width", "2", "--quote-style", "AutoPreferDouble" },
+      extra_args = { "--indent-type", "Spaces", "--indent-width", "2", "--quote-style", "AutoPreferSingle" },
     }),
     nls.builtins.diagnostics.eslint_d,
     nls.builtins.formatting.prettier.with({
