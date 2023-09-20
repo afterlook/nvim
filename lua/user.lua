@@ -35,6 +35,8 @@ vim.o.completeopt = "menuone,noselect"
 -- Set cursorline
 vim.o.cursorline = true
 
+set.colorcolumn = "100"
+
 -- [[ Basic Keymaps ]]
 -- Set <space> as the leader key
 -- See `:help mapleader`
