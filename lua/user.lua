@@ -6,6 +6,7 @@ local tab_width = 4
 set.tabstop = tab_width
 set.softtabstop = tab_width
 set.shiftwidth = tab_width
+set.colorcolumn = "100"
 
 -- Relative  lines
 set.relativenumber = true
@@ -27,13 +28,23 @@ vim.o.smartcase = true
 
 -- Decrease update time
 vim.o.updatetime = 250
-vim.wo.signcolumn = "yes"
+-- Fixed column for diagnostics to appear
+-- Show autodiagnostic popup on cursor hover_range
+-- Goto previous / next diagnostic warning / error
+-- Show inlay_hints more frequently
+vim.cmd([[
+set signcolumn=yes
+autocmd CursorHold * lua vim.diagnostic.open_float(nil, { focusable = false })
+]])
 
 -- Set completeopt to have a better completion experience
-vim.o.completeopt = "menuone,noselect"
+vim.o.completeopt = "menuone,noselect,noinsert"
 
 -- Set cursorline
 vim.o.cursorline = true
+vim.api.nvim_create_autocmd("ColorScheme", {
+  command = [[highlight CursorLine guibg=#e2e1e1 ]],
+})
 
 set.colorcolumn = "100"
 
@@ -86,6 +97,9 @@ set.guicursor = "n-v-c:blinkon100"
 
 -- center cursor
 set.scrolloff = 50
+
+-- termguicolors
+vim.opt.termguicolors = true
 
 -- Jump to last accessed window on closing the current one
 WinCloseJmp = function()

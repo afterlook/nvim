@@ -1,3 +1,5 @@
+-- speed up loading lua modules
+vim.loader.enable()
 -- References to ./lua/
 -- Plugin management via Packer
 require("plugins")
