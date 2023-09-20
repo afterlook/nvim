@@ -116,14 +116,11 @@ end
 -- Enable the following language servers
 local servers = {
   "clangd",
-  "rust_analyzer",
   "lua_ls",
-  "gopls",
   "pylsp",
   "tsserver",
   "hls",
   "marksman",
-  "typescript-language-server",
 }
 
 -- Ensure the servers above are installed
@@ -165,6 +162,9 @@ require("lspconfig").lua_ls.setup({
   capabilities = capabilities,
   settings = {
     Lua = {
+      defaultConfig = {
+        quote_style = "none",
+      },
       runtime = {
         -- Tell the language server which version of Lua you're using (most likely LuaJIT)
         version = "LuaJIT",
