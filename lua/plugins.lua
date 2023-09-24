@@ -213,6 +213,34 @@ require("packer").startup(function(use)
     "christoomey/vim-tmux-navigator",
   }
 
+  use {
+    "ThePrimeagen/refactoring.nvim",
+    requires = {
+        {"nvim-lua/plenary.nvim"},
+        {"nvim-treesitter/nvim-treesitter"}
+    },
+    config = get_config("refactoring")
+  }
+
+  use({
+    "iamcco/markdown-preview.nvim",
+    run = function() vim.fn["mkdp#util#install"]() end,
+  })
+
+  use({
+    "princejoogie/dir-telescope.nvim",
+    -- telescope.nvim is a required dependency
+    requires = {"nvim-telescope/telescope.nvim"},
+    config = function()
+      require("dir-telescope").setup({
+	-- these are the default options set
+	hidden = true,
+	no_ignore = false,
+	show_preview = true,
+      })
+    end,
+  })
+
   -- rust
   use {
     "simrat39/rust-tools.nvim",

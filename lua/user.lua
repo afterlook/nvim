@@ -46,6 +46,8 @@ vim.api.nvim_create_autocmd("ColorScheme", {
   command = [[highlight CursorLine guibg=#e2e1e1 ]],
 })
 
+set.colorcolumn = "100"
+
 -- [[ Basic Keymaps ]]
 -- Set <space> as the leader key
 -- See `:help mapleader`
