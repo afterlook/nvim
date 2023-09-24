@@ -21,6 +21,7 @@ nls.setup({
     }),
     nls.builtins.formatting.terraform_fmt,
     nls.builtins.formatting.black,
+    nls.builtins.formatting.gofumpt,
     nls.builtins.formatting.gofmt,
     nls.builtins.formatting.goimports,
     nls.builtins.formatting.fourmolu,

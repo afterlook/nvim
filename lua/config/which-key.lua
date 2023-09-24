@@ -28,6 +28,11 @@ wk.register({
     p = { "<cmd>PackerSync<cr>", "PackerSync" },
     t = { "<cmd>ToggleTerm<cr>", "Terminal" },
     h = { "<cmd>Noice telescope<cr>", "Messages history" },
+    m = {
+      name = "Markdown",
+      m = { "<cmd>MarkdownPreview<cr>", "Preview" },
+      s = { "<cmd>MarkdownPreviewStop<cr>", "Preview stop" },
+    },
   },
   s = {
     name = "Search",
@@ -35,7 +40,8 @@ wk.register({
     h = { "<cmd>Telescope help_tags<cr>", "Search Help" },
     w = { "<cmd>Telescope grep_string<cr>", "Search current Word" },
     g = { "<cmd>Telescope live_grep<cr>", "Search by Grep" },
-    d = { "<cmd>Telescope diagnostics<cr>", "Search Diagnostics" },
+    d = { "<cmd>Telescope dir live_grep<cr>", "Search in Directory" },
+    q = { "<cmd>Telescope diagnostics<cr>", "Search Diagnostics" },
   },
   g = {
     name = "Git",
@@ -82,3 +88,15 @@ wk.register({
     ["4"] = { "<cmd>lua require('harpoon.ui').nav_file(4)<cr>", "File 4" },
   },
 }, { prefix = "<leader>", mode = "n", default_options })
+
+wk.register({
+  r = {
+    name = "Refactor",
+    e = {
+      function()
+        require("refactoring").refactor("Extract Function")
+      end,
+      "Extract function",
+    },
+  },
+}, { prefix = "<leader>", mode = "v", default_options })
