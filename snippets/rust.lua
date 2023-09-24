@@ -12,10 +12,12 @@ return {
   }),
 
   ls.snippet({ trig = 'testpanic' }, {
-    t({ '#[test]', '#[should_panic]', 'fn ' }),
-    i(1, 'name'),
+    t({ '#[test]', '#[should_panic(expected = "' }),
+    i(1, 'expected panic partial string'),
+    t({ '")]', 'fn ' }),
+    i(2, 'name'),
     t({ '() {', '\t' }),
-    i(2, { 'unimplemented!();' }),
+    i(3, { 'unimplemented!();' }),
     t({ '', '}' }),
   }),
 }
