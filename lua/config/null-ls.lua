@@ -1,14 +1,23 @@
-local nls = require("null-ls")
-local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
+local nls = require('null-ls')
+local augroup = vim.api.nvim_create_augroup('LspFormatting', {})
 
 nls.setup({
   sources = {
     nls.builtins.formatting.stylua.with({
-      extra_args = { "--indent-type", "Spaces", "--indent-width", "2", "--quote-style", "AutoPreferSingle" },
+      extra_args = {
+        '--indent-type',
+        'Spaces',
+        '--indent-width',
+        '2',
+        '--quote-style',
+        'AutoPreferSingle',
+        '--column-width',
+        '100',
+      },
     }),
     nls.builtins.diagnostics.eslint_d,
     nls.builtins.formatting.prettier.with({
-      extra_args = { "--single-quote", "true" },
+      extra_args = { '--single-quote', 'true' },
     }),
     nls.builtins.formatting.terraform_fmt,
     nls.builtins.formatting.black,
@@ -17,20 +26,20 @@ nls.setup({
     nls.builtins.formatting.fourmolu,
     nls.builtins.formatting.rustfmt,
     nls.builtins.formatting.latexindent.with({
-      extra_args = { "-g", "/dev/null" }, -- https://github.com/cmhughes/latexindent.pl/releases/tag/V3.9.3
+      extra_args = { '-g', '/dev/null' }, -- https://github.com/cmhughes/latexindent.pl/releases/tag/V3.9.3
     }),
     nls.builtins.code_actions.shellcheck,
   },
   on_attach = function(client, bufnr)
-    if client.supports_method("textDocument/formatting") then
+    if client.supports_method('textDocument/formatting') then
       vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
-      vim.api.nvim_create_autocmd("BufWritePre", {
+      vim.api.nvim_create_autocmd('BufWritePre', {
         group = augroup,
         buffer = bufnr,
         callback = function()
           -- on 0.8, you should use vim.lsp.buf.format({ bufnr = bufnr }) instead
 
-          local ns = vim.api.nvim_create_namespace("my_namespace")
+          local ns = vim.api.nvim_create_namespace('my_namespace')
           -- Get a reference to the original signs handler
           local orig_signs_handler = vim.diagnostic.handlers.signs
           vim.diagnostic.handlers.signs = {
