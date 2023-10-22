@@ -1,2 +1,4 @@
-local g = vim.g
-g.gitblame_enabled = 0
+require('gitblame').setup({
+  --Note how the `gitblame_` prefix is omitted in `setup`
+  enabled = false,
+})
