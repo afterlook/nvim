@@ -118,7 +118,7 @@ require("packer").startup(function(use)
   use { "RRethy/vim-illuminate" }
 
   use {
-    "simrat39/symbols-outline.nvim",
+    "hedyhli/symbols-outline.nvim",
     config = get_config("symbols")
   }
 
@@ -133,12 +133,6 @@ require("packer").startup(function(use)
     "romgrk/barbar.nvim",
     requires = {"kyazdani42/nvim-web-devicons"},
     config = get_config("barbar")
-  }
-
-  use {
-    "crusj/structrue-go.nvim",
-    branch = "main",
-    config = get_config("go-symbols")
   }
 
   use {
