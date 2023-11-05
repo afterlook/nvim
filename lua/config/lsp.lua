@@ -58,22 +58,10 @@ function M.on_attach(client, bufnr)
         },
       },
     },
+    m = {
+      s = { '<cmd>SymbolsOutline<cr>', 'Toggle SymbolsOutline' },
+    },
   }, { prefix = '<leader>', mode = 'n', default_options })
-
-  if client.name == 'gopls' then
-    wk.register({
-      m = {
-        s = { "<cmd>lua require'structrue-go'.toggle()<cr>", 'Toggle SymbolsOutline' },
-      },
-    }, { prefix = '<leader>', mode = 'n', default_options })
-  else
-    wk.register({
-      m = {
-        s = { '<cmd>SymbolsOutline<cr>', 'Toggle SymbolsOutline' },
-      },
-    }, { prefix = '<leader>', mode = 'n', default_options })
-  end
-
   local nmap = function(keys, func, desc)
     if desc then
       desc = 'LSP: ' .. desc
