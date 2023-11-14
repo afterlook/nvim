@@ -59,7 +59,7 @@ function M.on_attach(client, bufnr)
       },
     },
     m = {
-      s = { '<cmd>SymbolsOutline<cr>', 'Toggle SymbolsOutline' },
+      s = { '<cmd>Outline<cr>', 'Toggle SymbolsOutline' },
     },
   }, { prefix = '<leader>', mode = 'n', default_options })
   local nmap = function(keys, func, desc)
