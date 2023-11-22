@@ -118,7 +118,7 @@ require("packer").startup(function(use)
   use { "RRethy/vim-illuminate" }
 
   use {
-    "hedyhli/symbols-outline.nvim",
+    "hedyhli/outline.nvim",
     config = get_config("symbols")
   }
 
