@@ -16,9 +16,9 @@ nls.setup({
       },
     }),
     nls.builtins.diagnostics.eslint_d,
-    nls.builtins.formatting.prettier.with({
-      extra_args = { '--single-quote', 'true' },
-    }),
+    -- nls.builtins.formatting.prettier.with({
+    -- extra_args = { '--single-quote', 'true' },
+    -- }),
     nls.builtins.formatting.terraform_fmt,
     nls.builtins.formatting.black,
     nls.builtins.formatting.gofumpt,

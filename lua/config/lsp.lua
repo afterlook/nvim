@@ -115,6 +115,7 @@ local servers = {
   'marksman',
   'tflint',
   'terraformls',
+  'java_language_server',
 }
 
 -- Ensure the servers above are installed
