@@ -134,3 +134,7 @@ vim.keymap.set('n', '<c-q>', ':bd<CR>', { silent = true })
 vim.opt.mouse = 'a'
 
 vim.g.editorconfig = true
+
+-- overwrite tab invisible symbols and newlines
+set.listchars:append({ tab = '» ', eol = '↲' })
+set.list = true
