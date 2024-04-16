@@ -180,20 +180,16 @@ require("packer").startup(function(use)
     config = get_config("harpoon")
   }
 
-  use {
-    "rcarriga/nvim-notify",
-    config = get_config("notify")
-  }
+  -- use {
+  --   "rcarriga/nvim-notify",
+  --   config = get_config("notify")
+  -- }
 
   use {
     "folke/noice.nvim",
     requires = {
       -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
       "MunifTanjim/nui.nvim",
-      -- OPTIONAL:
-      --   `nvim-notify` is only needed, if you want to use the notification view.
-      --   If not available, we use `mini` as the fallback
-      "rcarriga/nvim-notify",
     },
     config = get_config("noice"),
   }
@@ -247,6 +243,8 @@ require("packer").startup(function(use)
     branch = 'master',
     config = get_config("hop"),
   }
+
+  use {'kevinhwang91/nvim-bqf', ft = 'qf'}
 
   if is_bootstrap then
     require("packer").sync()
