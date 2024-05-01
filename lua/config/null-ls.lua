@@ -15,7 +15,6 @@ nls.setup({
         '100',
       },
     }),
-    nls.builtins.diagnostics.eslint_d,
     -- nls.builtins.formatting.prettier.with({
     -- extra_args = { '--single-quote', 'true' },
     -- }),
@@ -24,13 +23,14 @@ nls.setup({
     nls.builtins.formatting.gofumpt,
     nls.builtins.formatting.gofmt,
     nls.builtins.formatting.goimports,
-    nls.builtins.formatting.fourmolu,
-    nls.builtins.formatting.rustfmt,
-    nls.builtins.formatting.latexindent.with({
+    nls.builtins.diagnostics.editorconfig_checker,
+
+    -- weird decision by mainteners to move formatters/diagnostics to different repos
+    require('none-ls.diagnostics.eslint_d'),
+    require('none-ls.formatting.rustfmt'),
+    require('none-ls.formatting.latexindent').with({
       extra_args = { '-g', '/dev/null' }, -- https://github.com/cmhughes/latexindent.pl/releases/tag/V3.9.3
     }),
-    nls.builtins.code_actions.shellcheck,
-    nls.builtins.diagnostics.editorconfig_checker,
   },
   on_attach = function(client, bufnr)
     if client.supports_method('textDocument/formatting') then

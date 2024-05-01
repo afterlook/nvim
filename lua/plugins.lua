@@ -107,7 +107,10 @@ require('lazy').setup({
 
   { 'folke/which-key.nvim', config = get_config('which-key') },
 
-  { 'jose-elias-alvarez/null-ls.nvim', config = get_config('null-ls') },
+  {
+    'nvimtools/none-ls.nvim',
+    dependencies = { "nvimtools/none-ls-extras.nvim" },
+    config = get_config('null-ls') },
 
   {
     'kyazdani42/nvim-tree.lua',
