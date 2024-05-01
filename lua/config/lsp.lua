@@ -116,6 +116,7 @@ local servers = {
   'tflint',
   'terraformls',
   'java_language_server',
+  'bashls',
 }
 
 -- Ensure the servers above are installed
