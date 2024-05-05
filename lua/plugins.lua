@@ -127,8 +127,8 @@ require('lazy').setup({
   },
 
   {
-    'kyazdani42/nvim-tree.lua',
-    dependencies = { 'kyazdani42/nvim-web-devicons' },
+    'nvim-tree/nvim-tree.lua',
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
     config = get_config('nvim-tree'),
     branch = 'master',
   },
@@ -137,7 +137,7 @@ require('lazy').setup({
 
   {
     'folke/trouble.nvim',
-    dependencies = 'kyazdani42/nvim-web-devicons',
+    dependencies = 'nvim-tree/nvim-web-devicons',
     config = function()
       require('trouble').setup({
         -- your configuration comes here
@@ -168,7 +168,7 @@ require('lazy').setup({
 
   {
     'romgrk/barbar.nvim',
-    dependencies = { 'kyazdani42/nvim-web-devicons' },
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
     config = get_config('barbar'),
   },
 

@@ -13,14 +13,12 @@ wk.register({
   ['<leader>'] = { name = 'Leader', a = { "<cmd>lua print('fasfAS')<cr>", 'test' } },
   f = {
     name = 'Files',
-    b = { '<cmd>Telescope file_browser<cr>', 'File browser' },
     g = { '<cmd>NvimTreeFindFile<cr>', 'Find in tree' },
-    f = { '<cmd>Telescope find_files<cr>', 'Find File' },
+    f = { '<cmd>FzfLua files<cr>', 'Find File' },
     p = { '<cmd>NvimTreeToggle<cr>', 'Toggle Filetree' },
-    r = { '<cmd>Telescope oldfiles<cr>', 'Open Recent File' },
+    r = { '<cmd>FzfLua oldfiles<cr>', 'Open Recent File' },
     a = { '<cmd>wa<cr>', 'Save all Buffers' },
     s = { '<cmd>w<cr>', 'Save Buffer' },
-    z = { '<cmd>Telescope zoxide list<CR>', 'Zoxide' },
   },
   m = {
     name = 'Misc',
@@ -36,16 +34,12 @@ wk.register({
   },
   s = {
     name = 'Search',
-    f = { '<cmd>Telescope find_files<cr>', 'Search Files' },
-    h = { '<cmd>Telescope help_tags<cr>', 'Search Help' },
-    w = { '<cmd>Telescope grep_string<cr>', 'Search current Word' },
-    g = { '<cmd>Telescope live_grep<cr>', 'Search by Grep' },
-    -- G = {
-    --   '<cmd>lua require("telescope.builtin").live_grep({ additional_args = function() return { "--max-depth=1", } end })<cr>',
-    --   'Search by Grep',
-    -- },
+    f = { '<cmd>FzfLua files<cr>', 'Search Files' },
+    h = { '<cmd>FzfLua helptags<cr>', 'Search Help' },
+    w = { '<cmd>FzfLua grep_cword<cr>', 'Search current Word' },
+    g = { '<cmd>FzfLu live_grep<cr>', 'Search by Grep' },
     d = { '<cmd>Telescope dir live_grep<cr>', 'Search in Directory' },
-    q = { '<cmd>Telescope diagnostics<cr>', 'Search Diagnostics' },
+    q = { '<cmd>FzfLua diagnostics_workspace<cr>', 'Search Diagnostics' },
   },
   g = {
     name = 'Git',
