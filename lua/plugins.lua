@@ -94,6 +94,19 @@ require('lazy').setup({
     'nvim-telescope/telescope.nvim',
     dependencies = { 'nvim-lua/plenary.nvim' },
     config = get_config('telescope'),
+    version = '0.1.6',
+  },
+
+  {
+    'ibhagwan/fzf-lua',
+    -- optional for icon support
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    config = function()
+      -- calling `setup` is optional for customization
+      require('fzf-lua').setup({
+        'telescope',
+      })
+    end,
   },
 
   -- Fuzzy Finder Algorithm which dependencies local dependencies to be built. Only load if `make` is available
@@ -109,8 +122,9 @@ require('lazy').setup({
 
   {
     'nvimtools/none-ls.nvim',
-    dependencies = { "nvimtools/none-ls-extras.nvim" },
-    config = get_config('null-ls') },
+    dependencies = { 'nvimtools/none-ls-extras.nvim' },
+    config = get_config('null-ls'),
+  },
 
   {
     'kyazdani42/nvim-tree.lua',
@@ -171,7 +185,7 @@ require('lazy').setup({
 
   { 'ray-x/go.nvim', dependencies = 'ray-x/guihua.lua', config = get_config('go'), ft = { 'go' } },
 
-  { 'fatih/vim-go' },
+  -- { 'fatih/vim-go' },
 
   {
     'gfanto/fzf-lsp.nvim',
