@@ -35,6 +35,7 @@ wk.register({
   s = {
     name = 'Search',
     f = { '<cmd>FzfLua files<cr>', 'Search Files' },
+    s = { '<cmd>FzfLua lsp_document_symbols<cr>', 'Search Symbols' },
     h = { '<cmd>FzfLua helptags<cr>', 'Search Help' },
     w = { '<cmd>FzfLua grep_cword<cr>', 'Search current Word' },
     g = { '<cmd>FzfLua live_grep_glob<cr>', 'Search by Grep' },
