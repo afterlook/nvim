@@ -37,8 +37,7 @@ wk.register({
     f = { '<cmd>FzfLua files<cr>', 'Search Files' },
     h = { '<cmd>FzfLua helptags<cr>', 'Search Help' },
     w = { '<cmd>FzfLua grep_cword<cr>', 'Search current Word' },
-    g = { '<cmd>FzfLu live_grep<cr>', 'Search by Grep' },
-    d = { '<cmd>Telescope dir live_grep<cr>', 'Search in Directory' },
+    g = { '<cmd>FzfLua live_grep_glob<cr>', 'Search by Grep' },
     q = { '<cmd>FzfLua diagnostics_workspace<cr>', 'Search Diagnostics' },
   },
   g = {
