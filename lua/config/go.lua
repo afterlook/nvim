@@ -28,7 +28,7 @@ require('go').setup({
         c = {
           name = 'Coding',
           a = { '<cmd>GoCodeAction<cr>', 'Code action' },
-          e = { '<cmd>GoIfErr<cr>', 'Add if err' },
+          e = { '<cmd>GoIfErr<cr>a', 'Add if err' },
           h = {
             name = 'Helper',
             a = { '<cmd>GoAddTag<cr>', 'Add tags to struct' },
