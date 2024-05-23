@@ -120,11 +120,6 @@ local servers = {
   'gopls',
 }
 
--- Ensure the servers above are installed
-require('nvim-lsp-installer').setup({
-  ensure_installed = servers,
-})
-
 vim.g.coq_settings = {
   auto_start = true,
   clients = {

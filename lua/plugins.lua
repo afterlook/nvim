@@ -48,7 +48,6 @@ require('lazy').setup({
   { 'neovim/nvim-lspconfig', config = get_config('lsp') },
   -- Automatically install language servers to stdpath
   { 'onsails/lspkind-nvim', dependencies = { 'famiu/bufdelete.nvim' } },
-  'williamboman/nvim-lsp-installer',
   -- END LSP
 
   -- Autocompletion
