@@ -1,8 +1,34 @@
--- LSP settings.
---  This function gets run when an LSP connects to a particular buffer.
+-- Enable the following language servers
+local servers = {
+  'clangd',
+  'lua_ls',
+  'pylsp',
+  'tsserver',
+  'marksman',
+  'tflint',
+  'terraformls',
+  'bashls',
+  'gopls',
+}
+
+-- Prerequisite to any lsp configuration
+require('mason').setup({
+  ui = {
+    icons = {
+      package_installed = '✓',
+      package_pending = '➜',
+      package_uninstalled = '✗',
+    },
+  },
+})
+require('mason-lspconfig').setup({
+  ensure_installed = servers,
+})
 
 local M = {}
 
+-- LSP settings.
+--  This function gets run when an LSP connects to a particular buffer.
 function M.on_attach(client, bufnr)
   client.server_capabilities.document_formatting = false
   client.server_capabilities.documentFormattingProvider = false
@@ -105,21 +131,6 @@ function M.on_attach(client, bufnr)
   )
 end
 
--- Enable the following language servers
-local servers = {
-  'clangd',
-  'lua_ls',
-  'pylsp',
-  'tsserver',
-  'hls',
-  'marksman',
-  'tflint',
-  'terraformls',
-  'java_language_server',
-  'bashls',
-  'gopls',
-}
-
 vim.g.coq_settings = {
   auto_start = true,
   clients = {
@@ -142,8 +153,6 @@ for _, lsp in ipairs(servers) do
   })
 end
 
--- Example custom configuration for lua
---
 -- Make runtime files discoverable to the server
 local runtime_path = vim.split(package.path, ';')
 table.insert(runtime_path, 'lua/?.lua')
