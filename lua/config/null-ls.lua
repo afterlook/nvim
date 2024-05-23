@@ -20,9 +20,6 @@ nls.setup({
     -- }),
     nls.builtins.formatting.terraform_fmt,
     nls.builtins.formatting.black,
-    nls.builtins.formatting.gofumpt,
-    nls.builtins.formatting.gofmt,
-    nls.builtins.formatting.goimports,
     nls.builtins.diagnostics.editorconfig_checker,
 
     -- weird decision by mainteners to move formatters/diagnostics to different repos

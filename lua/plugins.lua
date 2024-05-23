@@ -183,9 +183,19 @@ require('lazy').setup({
     end,
   },
 
-  { 'ray-x/go.nvim', dependencies = 'ray-x/guihua.lua', config = get_config('go'), ft = { 'go' } },
-
-  -- { 'fatih/vim-go' },
+  {
+    'ray-x/go.nvim',
+    dependencies = {
+      { 'ray-x/guihua.lua' },
+      { 'theHamsta/nvim-dap-virtual-text' },
+      { 'mfussenegger/nvim-dap' },
+      { 'rcarriga/nvim-dap-ui' },
+    },
+    event = { 'CmdlineEnter' },
+    config = get_config('go'),
+    ft = { 'go', 'gomod' },
+    build = ':lua require("go.install").update_all_sync()',
+  },
 
   {
     'gfanto/fzf-lsp.nvim',

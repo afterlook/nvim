@@ -117,6 +117,7 @@ local servers = {
   'terraformls',
   'java_language_server',
   'bashls',
+  'gopls',
 }
 
 -- Ensure the servers above are installed
