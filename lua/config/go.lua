@@ -20,8 +20,8 @@ require('go').setup({
   lsp_cfg = {
     capabilities = capabilities,
     on_attach = function(client, bufnr)
-      require('go.lsp').gopls_on_attach(client, bufnr)
       require('config/lsp').on_attach(client, bufnr)
+      require('go.lsp').gopls_on_attach(client, bufnr)
       local wk = require('which-key')
       local default_options = { silent = true }
       wk.register({
@@ -73,58 +73,8 @@ require('go').setup({
   --   lsp_cfg = {settings={gopls={matcher='CaseInsensitive', ['local'] = 'your_local_module_path', gofumpt = true }}}
   lsp_gofumpt = true, -- true: set default gofmt in gopls format to gofumpt
   -- false: do not set default gofmt in gopls format to gofumpt
-  lsp_on_attach = function(client, bufnr)
-    -- require('go.lsp').gopls_on_attach(client, bufnr)
-    -- M.on_attach(client, bufnr)
-    local wk = require('which-key')
-    local default_options = { silent = true }
-    wk.register({
-      c = {
-        name = 'Coding',
-        a = { '<cmd>GoCodeAction<cr>', 'Code action' },
-        e = { '<cmd>GoIfErr<cr>', 'Add if err' },
-        h = {
-          name = 'Helper',
-          a = { '<cmd>GoAddTag<cr>', 'Add tags to struct' },
-          r = { '<cmd>GoRMTag<cr>', 'Remove tags to struct' },
-          c = { '<cmd>GoCoverage<cr>', 'Test coverage' },
-          g = { "<cmd>lua require('go.comment').gen()<cr>", 'Generate comment' },
-          v = { '<cmd>GoVet<cr>', 'Go vet' },
-          t = { '<cmd>GoModTidy<cr>', 'Go mod tidy' },
-          i = { '<cmd>GoModInit<cr>', 'Go mod init' },
-        },
-        i = { '<cmd>GoToggleInlay<cr>', 'Toggle inlay' },
-        l = { '<cmd>GoLint<cr>', 'Run linter' },
-        o = { '<cmd>GoPkgOutline<cr>', 'Outline' },
-        r = { '<cmd>GoRun<cr>', 'Run' },
-        s = { '<cmd>GoFillStruct<cr>', 'Autofill struct' },
-        t = {
-          name = 'Tests',
-          r = { '<cmd>GoTest<cr>', 'Run tests' },
-          a = { '<cmd>GoAlt!<cr>', 'Open alt file' },
-          s = { '<cmd>GoAltS!<cr>', 'Open alt file in split' },
-          v = { '<cmd>GoAltV!<cr>', 'Open alt file in vertical split' },
-          u = { '<cmd>GoTestFunc<cr>', 'Run test for current func' },
-          f = { '<cmd>GoTestFile<cr>', 'Run test for current file' },
-        },
-        x = {
-          name = 'Code Lens',
-          l = { '<cmd>GoCodeLenAct<cr>', 'Toggle Lens' },
-          a = { '<cmd>GoCodeAction<cr>', 'Code Action' },
-        },
-      },
-    }, { prefix = '<leader>', mode = 'n', default_options })
-    wk.register({
-      c = {
-        name = 'Coding',
-        j = { "<cmd>'<,'>GoJson2Struct<cr>", 'Json to struct' },
-      },
-    }, { prefix = '<leader>', mode = 'v', default_options })
-  end,
-  --      when lsp_cfg is true
-  -- if lsp_on_attach is a function: use this function as on_attach function for gopls
   lsp_keymaps = true, -- set to false to disable gopls/lsp keymap
-  lsp_codelens = true, -- set to false to disable codelens, true by default, you can use a function
+  lsp_codelens = false, -- set to false to disable codelens, true by default, you can use a function
   -- function(bufnr)
   --    vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>F", "<cmd>lua vim.lsp.buf.formatting()<CR>", {noremap=true, silent=true})
   -- end
@@ -144,7 +94,7 @@ require('go').setup({
   -- set to true: use gopls to format
   -- false if you want to use other formatter tool(e.g. efm, nulls)
   lsp_inlay_hints = {
-    enable = true,
+    enable = false,
     -- hint style, set to 'eol' for end-of-line hints, 'inlay' for inline hints
     -- inlay only available for 0.10.x
     style = 'inlay',
@@ -159,7 +109,7 @@ require('go').setup({
     only_current_line_autocmd = 'CursorHold',
     -- whether to show variable name before type hints with the inlay hints or not
     -- default: false
-    show_variable_name = true,
+    show_variable_name = false,
     -- prefix for parameter hints
     parameter_hints_prefix = '󰊕 ',
     show_parameter_hints = true,

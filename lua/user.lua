@@ -138,11 +138,11 @@ vim.g.editorconfig = true
 -- overwrite tab invisible symbols and newlines
 set.listchars:append({ tab = '» ', eol = '↲' })
 set.list = true
+
 vim.diagnostic.config({
-  hdlr = true, -- hook lsp diag handler and send diag to quickfix
+  hdlr = false,
   underline = true,
-  -- virtual text setup
-  virtual_text = { spacing = 0, prefix = '■' },
-  signs = true,
+  virtual_text = { spacing = 2, prefix = '' },
+  signs = { '', '', '', '' }, -- set to true to use default signs, an array of 4 to specify custom signs
   update_in_insert = true,
 })
