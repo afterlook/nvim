@@ -1,16 +1,3 @@
-local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
-if not (vim.uv or vim.loop).fs_stat(lazypath) then
-  vim.fn.system({
-    'git',
-    'clone',
-    '--filter=blob:none',
-    'https://github.com/folke/lazy.nvim.git',
-    '--branch=stable', -- latest stable release
-    lazypath,
-  })
-end
-vim.opt.rtp:prepend(lazypath)
-
 local function get_config(name)
   return function()
     require(string.format('config/%s', name))
@@ -45,7 +32,7 @@ require('lazy').setup({
   -- LSP
   'famiu/bufdelete.nvim',
   -- Collection of configurations for built-in LSP client
-  { 'neovim/nvim-lspconfig', config = get_config('lsp') },
+  { 'neovim/nvim-lspconfig', config = get_config('lsp'), priority = 1 },
   -- Automatically install language servers to stdpath
   { 'onsails/lspkind-nvim', dependencies = { 'famiu/bufdelete.nvim' } },
   -- END LSP
