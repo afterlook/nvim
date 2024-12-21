@@ -65,11 +65,11 @@ cmp.setup({
   },
   sources = {
     { name = 'path' },
+    { name = 'luasnip', keyword_length = 2 },
     { name = 'nvim_lsp', keyword_length = 2 },
     { name = 'nvim_lsp_signature_help' },
     { name = 'nvim_lua', keyword_length = 2 },
     { name = 'buffer', keyword_length = 5 },
-    { name = 'luasnip', keyword_length = 2 },
     { name = 'calc' },
     { name = 'spell', keyword_length = 5 },
     { name = 'rg', keyword_length = 5 },

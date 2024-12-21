@@ -60,6 +60,7 @@ require('lazy').setup({
 
   {
     'L3MON4D3/LuaSnip',
+    version = 'v2.*', -- Replace <CurrentMajor> by the latest released major (first number of latest release)
     dependencies = 'saadparwaiz1/cmp_luasnip',
     config = get_config('luasnip'),
   },
@@ -104,7 +105,11 @@ require('lazy').setup({
 
   { 'windwp/nvim-autopairs', config = get_config('nvim-autopairs') },
 
-  { 'folke/which-key.nvim', config = get_config('which-key') },
+  {
+    'folke/which-key.nvim',
+    dependencies = { 'echasnovski/mini.icons' },
+    config = get_config('which-key'),
+  },
 
   {
     'nvimtools/none-ls.nvim',
@@ -204,7 +209,10 @@ require('lazy').setup({
 
   {
     'williamboman/mason.nvim',
-    dependencies = 'williamboman/mason-lspconfig.nvim',
+    dependencies = {
+      'williamboman/mason-lspconfig.nvim',
+      'WhoIsSethDaniel/mason-tool-installer.nvim',
+    },
   },
 
   {
@@ -219,11 +227,6 @@ require('lazy').setup({
       'MunifTanjim/nui.nvim',
     },
     config = get_config('noice'),
-  },
-
-  {
-    'python-lsp/python-lsp-server',
-    config = get_config('pylsp'),
   },
 
   {
@@ -266,6 +269,36 @@ require('lazy').setup({
     config = get_config('rust-tools'),
   },
   -- end rust
+
+  -- python
+  {
+    'linux-cultist/venv-selector.nvim',
+    dependencies = {
+      'neovim/nvim-lspconfig',
+      'mfussenegger/nvim-dap',
+      'mfussenegger/nvim-dap-python', --optional
+      {
+        'nvim-telescope/telescope.nvim',
+        branch = '0.1.x',
+        dependencies = { 'nvim-lua/plenary.nvim' },
+      },
+    },
+    lazy = false,
+    branch = 'regexp', -- This is the regexp branch, use this for the new version
+    config = function()
+      require('venv-selector').setup()
+    end,
+    keys = {
+      { ',v', '<cmd>VenvSelect<cr>' },
+    },
+  },
+
+  {
+    'python-lsp/python-lsp-server',
+    dependencies = { 'neovim/nvim-lspconfig' },
+    config = get_config('pylsp'),
+  },
+  -- end python
 
   {
     'smoka7/hop.nvim',
