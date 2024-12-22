@@ -1,3 +1,0 @@
-return {
-  'mjlbach/onedark.nvim',
-}

@@ -50,7 +50,6 @@
   "nvim-treesitter": { "branch": "master", "commit": "caba7ef3556079dec03407bcbb290ddc688ea06e" },
   "nvim-treesitter-textobjects": { "branch": "master", "commit": "ad8f0a472148c3e0ae9851e26a722ee4e29b1595" },
   "nvim-web-devicons": { "branch": "master", "commit": "6317aca1fd86cc8e8c5ad30029ae7640d566cec6" },
-  "onedark.nvim": { "branch": "main", "commit": "e5e6b1e66ade328c201374ec3c9d0f9b4be23394" },
   "outline.nvim": { "branch": "main", "commit": "6c44527837ff7ac1cd054dc365a721e881020a2e" },
   "plenary.nvim": { "branch": "master", "commit": "2d9b06177a975543726ce5c73fca176cedbffe9d" },
   "python-lsp-server": { "branch": "develop", "commit": "eb61ccd97bbe9c58fbde6496a78015ee3c129146" },
