@@ -1,0 +1,3 @@
+return {
+  { 'Djancyp/cheat-sheet' },
+}
