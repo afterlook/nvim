@@ -9,19 +9,20 @@ return {
   {
     'ray-x/go.nvim',
     dependencies = {
-      { 'ray-x/guihua.lua' },
-      { 'theHamsta/nvim-dap-virtual-text' },
-      { 'mfussenegger/nvim-dap' },
-      { 'rcarriga/nvim-dap-ui' },
-      { 'rcarriga/nvim-dap-ui' },
-      { 'neovim/nvim-lspconfig' },
+      'ray-x/guihua.lua',
+      'theHamsta/nvim-dap-virtual-text',
+      'mfussenegger/nvim-dap',
+      'rcarriga/nvim-dap-ui',
+      'rcarriga/nvim-dap-ui',
+      'neovim/nvim-lspconfig',
+      'saghen/blink.cmp',
     },
     event = { 'CmdlineEnter' },
     ft = { 'go', 'gomod' },
     build = ':lua require("go.install").update_all_sync()',
 
     config = function()
-      local capabilities = vim.lsp.protocol.make_client_capabilities()
+      local capabilities = require('blink.cmp').get_lsp_capabilities()
       require('go').setup({
 
         disable_defaults = false, -- true|false when true set false to all boolean settings and replace all tables
