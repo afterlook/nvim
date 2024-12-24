@@ -115,13 +115,12 @@ return {
         -- set to true: use gopls to format
         -- false if you want to use other formatter tool(e.g. efm, nulls)
         lsp_inlay_hints = {
-          enable = true,
           -- set to true if you want inlay hints to be disabled when opening your first buffer
           -- on all consecutive buffer openings, inlay hints state will persist from current buffer
           -- only available for 0.10.x
-          disabled_at_startup = false,
           -- hint style, set to 'eol' for end-of-line hints, 'inlay' for inline hints
           -- inlay only available for 0.10.x
+          enable = false,
           style = 'inlay',
           -- Note: following setup only works for style = 'eol', you do not need to set it for 'inlay'
           -- Only show inlay hints for the current line
