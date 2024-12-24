@@ -1,3 +1,10 @@
+local clipboardDlvBreakpointCommandCurrentLine = function()
+  local currentLineNumber = vim.api.nvim_win_get_cursor(0)[1]
+  local relative_filepath = vim.fn.expand('%:.')
+  local breakpointString = 'break ' .. relative_filepath .. ':' .. currentLineNumber
+  vim.fn.setreg('*', breakpointString)
+end
+
 return {
   {
     'ray-x/go.nvim',
@@ -40,7 +47,14 @@ return {
             wk.add({
               { '<leader>c', group = 'Coding' },
               { '<leader>ca', '<cmd>GoCodeAction<cr>', desc = 'Code action' },
-              { '<leader>ce', '<cmd>GoIfErr<cr>a', desc = 'Add if err' },
+              {
+                '<leader>cb',
+                function()
+                  clipboardDlvBreakpointCommandCurrentLine()
+                end,
+                desc = 'Copy breakpoint',
+              },
+              { '<leader>cc', '<cmd>GoCoverage<cr>', desc = 'Test coverage' },
               { '<leader>ch', group = 'Helper' },
               { '<leader>cha', '<cmd>GoAddTag<cr>', desc = 'Add tags to struct' },
               { '<leader>chc', '<cmd>GoCoverage<cr>', desc = 'Test coverage' },
