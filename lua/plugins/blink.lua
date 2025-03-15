@@ -35,7 +35,9 @@ return {
       },
 
       completion = {
-        list = { selection = 'preselect' },
+        list = {
+          selection = { preselect = true, auto_insert = true },
+        },
         accept = { auto_brackets = { enabled = true } },
         documentation = {
           auto_show = true,
@@ -61,8 +63,7 @@ return {
       -- Default list of enabled providers defined so that you can extend it
       -- elsewhere in your config, without redefining it, due to `opts_extend`
       sources = {
-        -- default = { 'lazydev', 'lsp', 'path', 'snippets', 'luasnip', 'buffer' },
-        default = { 'lsp', 'luasnip', 'lazydev', 'path', 'buffer' },
+        default = { 'lsp', 'snippets', 'lazydev', 'path', 'buffer' },
         providers = {
           lazydev = {
             name = 'LazyDev',
@@ -70,7 +71,7 @@ return {
           },
           luasnip = {
             name = 'Luasnip',
-            module = 'blink.cmp.sources.luasnip',
+            module = 'blink.cmp.sources.snippets',
           },
         },
       },
