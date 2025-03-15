@@ -23,6 +23,7 @@ return {
         'bashls',
         'gopls',
         'pylsp',
+        'jdtls',
       },
     },
   },
