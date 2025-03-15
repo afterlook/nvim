@@ -77,7 +77,7 @@ return {
             name = 'LazyDev',
             module = 'lazydev.integrations.blink',
           },
-          luasnip = {
+          snippets = {
             name = 'Luasnip',
             module = 'blink.cmp.sources.snippets',
           },
