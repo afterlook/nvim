@@ -146,3 +146,8 @@ vim.diagnostic.config({
   signs = { '', '', '', '' }, -- set to true to use default signs, an array of 4 to specify custom signs
   update_in_insert = true,
 })
+
+-- some ai stuff
+--
+-- recommendation made by avante plugin maintainer
+vim.opt.laststatus = 3

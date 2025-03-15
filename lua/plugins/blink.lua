@@ -3,6 +3,7 @@ return {
     'saghen/blink.cmp',
     -- optional: provides snippets for the snippet source
     dependencies = {
+      'Kaiser-Yang/blink-cmp-avante',
       'rafamadriz/friendly-snippets',
       { 'folke/lazydev.nvim', ft = 'lua' },
     },
@@ -65,6 +66,13 @@ return {
       sources = {
         default = { 'lsp', 'snippets', 'lazydev', 'path', 'buffer' },
         providers = {
+          avante = {
+            module = 'blink-cmp-avante',
+            name = 'Avante',
+            opts = {
+              -- options for blink-cmp-avante
+            },
+          },
           lazydev = {
             name = 'LazyDev',
             module = 'lazydev.integrations.blink',
@@ -78,22 +86,10 @@ return {
     },
     opts_extend = { 'sources.default' },
 
-    snippets = {
-      expand = function(snippet)
-        require('luasnip').lsp_expand(snippet)
-      end,
-      active = function(filter)
-        if filter and filter.direction then
-          return require('luasnip').jumpable(filter.direction)
-        end
-        return require('luasnip').in_snippet()
-      end,
-      jump = function(direction)
-        require('luasnip').jump(direction)
-      end,
-    },
+    snippets = { preset = 'luasnip' },
+    -- ensure you have the `snippets` source (enabled by default)
     sources = {
-      default = { 'lsp', 'path', 'luasnip', 'buffer' },
+      default = { 'lsp', 'path', 'snippets', 'buffer' },
     },
   },
 }

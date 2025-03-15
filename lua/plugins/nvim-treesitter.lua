@@ -2,12 +2,17 @@ return {
   -- Highlight, edit, and navigate code
   {
     'nvim-treesitter/nvim-treesitter',
+    lazy = false,
+    build = ':TSUpdate',
     opts = {
       -- Add languages to be installed here that you want installed for treesitter
-      ensure_installed = { 'lua', 'typescript', 'rust', 'go', 'python' },
+      ensure_installed = { 'all' },
       auto_install = true,
 
-      highlight = { enable = true },
+      highlight = {
+        enable = true,
+        additional_vim_regex_highlighting = false,
+      },
       indent = { enable = true },
       incremental_selection = {
         enable = true,
