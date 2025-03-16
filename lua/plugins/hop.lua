@@ -7,6 +7,7 @@ return {
     },
     config = function()
       local hop = require('hop')
+      hop.setup({})
 
       local opts = { noremap = true, silent = true }
       local directions = require('hop.hint').HintDirection
