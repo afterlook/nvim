@@ -33,6 +33,10 @@ return {
       -- add any opts here
       -- for example
       provider = 'copilot',
+      copilot = {
+        model = 'claude-3.7-sonnet',
+        -- model = 'o3-mini-2025-01-31',
+      },
       highlights = {
         diff = {
           current = 'MyAvanteCurrentGroup',
