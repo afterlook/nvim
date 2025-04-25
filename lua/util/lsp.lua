@@ -37,8 +37,8 @@ function M.on_attach(client, bufnr)
       '<cmd>lua vim.diagnostic.setloclist()<cr>',
       desc = 'Quickfix Diagnostics',
     },
-    { '<leader>lr', '<cmd>lua vim.lsp.buf.references()<cr>', desc = 'References' },
-    { '<leader>ls', '<cmd>Telescope lsp_document_symbols<cr>', desc = 'Document Symbols' },
+    { '<leader>lr', '<cmd>FzfLua lsp_references<cr>', desc = 'References' },
+    { '<leader>ls', '<cmd>FzfLua lsp_document_symbols<cr>', desc = 'Document Symbols' },
     { '<leader>lt', '<cmd>lua vim.lsp.buf.type_definition()<cr>', desc = 'Type Definition' },
     { '<leader>lw', group = 'workspaces' },
     {
@@ -46,7 +46,7 @@ function M.on_attach(client, bufnr)
       '<cmd>lua vim.lsp.buf.add_workspace_folder()<cr>',
       desc = 'Add Workspace Folder',
     },
-    { '<leader>lwd', '<cmd>Telescope diagnostics<cr>', desc = 'Workspace Diagnostics' },
+    { '<leader>lwd', '<cmd>FzfLua lsp_workspace_diagnostics<cr>', desc = 'Workspace Diagnostics' },
     {
       '<leader>lwl',
       '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<cr>',
@@ -56,11 +56,6 @@ function M.on_attach(client, bufnr)
       '<leader>lwr',
       '<cmd>lua vim.lsp.buf.remove_workspace_folder()<cr>',
       desc = 'Remove Workspace Folder',
-    },
-    {
-      '<leader>lws',
-      '<cmd>Telescope lsp_dynamic_workspace_symbols<cr>',
-      desc = 'Workspace Symbols',
     },
     { '<leader>ms', '<cmd>Outline<cr>', desc = 'Toggle SymbolsOutline' },
   })
