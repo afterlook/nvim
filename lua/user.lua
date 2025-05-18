@@ -88,6 +88,20 @@ vim.keymap.set('n', '<C-m>', ':cnext<CR>', { silent = true })
 --vim.keymap.set("n", "<c-j>", ":wincmd j<CR>", { silent = true })
 --vim.keymap.set("n", "<c-k>", ":wincmd k<CR>", { silent = true })
 
+-- gotodefs
+vim.api.nvim_set_keymap(
+  'n',
+  'gD',
+  '<cmd>lua vim.lsp.buf.declaration()<CR>',
+  { noremap = true, silent = true }
+)
+vim.api.nvim_set_keymap(
+  'n',
+  'gd',
+  '<cmd>lua vim.lsp.buf.definition()<CR>',
+  { noremap = true, silent = true }
+)
+
 -- lf plugin disable <leader>f
 vim.g.lf_map_keys = 0
 

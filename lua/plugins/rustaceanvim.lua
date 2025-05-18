@@ -33,10 +33,18 @@ return {
               {
                 '<leader>ce',
                 function()
-                  vim.cmd.RustLsp('explainError')
+                  vim.cmd.RustLsp({ 'explainError', 'current' })
                 end,
                 buffer = bufnr,
                 desc = 'Explain error',
+              },
+              {
+                '<leader>cc',
+                function()
+                  vim.cmd.RustLsp({ 'explainError', 'cycle' })
+                end,
+                buffer = bufnr,
+                desc = 'Explain error next',
               },
               { '<leader>cr', '<cmd>CargoReload<cr>', buffer = bufnr, desc = 'Cargo reload' },
 
