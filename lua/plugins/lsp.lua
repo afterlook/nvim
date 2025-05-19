@@ -77,6 +77,17 @@ return {
             },
           })
         end,
+
+        ['gopls'] = function()
+          require('lspconfig').gopls.setup({
+            on_attach = on_attach,
+            capabilities = capabilities,
+            diagnostics = {
+              globals = { 'vim' },
+            },
+            buildFlags = { '-tags=integration' },
+          })
+        end,
       })
     end,
   },
