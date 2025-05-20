@@ -30,6 +30,9 @@ return {
     lazy = false,
     version = false, -- Set this to "*" to always pull the latest release version, or set it to false to update to the latest code changes.
     opts = {
+      windows = {
+        position = 'right', -- the position of the sidebar
+      },
       -- add any opts here
       -- for example
       provider = 'copilot',
