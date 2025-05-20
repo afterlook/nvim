@@ -19,10 +19,22 @@ return {
 
         { '<leader>f', group = 'Files' },
         { '<leader>fa', '<cmd>wa<cr>', desc = 'Save all Buffers' },
-        { '<leader>ff', '<cmd>FzfLua files<cr>', desc = 'Find File' },
+        {
+          '<leader>ff',
+          function()
+            Snacks.picker.files()
+          end,
+          desc = 'Find File',
+        },
         { '<leader>fg', '<cmd>NvimTreeFindFile<cr>', desc = 'Find in tree' },
         { '<leader>fp', '<cmd>NvimTreeToggle<cr>', desc = 'Toggle Filetree' },
-        { '<leader>fr', '<cmd>FzfLua oldfiles<cr>', desc = 'Open Recent File' },
+        {
+          '<leader>fr',
+          function()
+            Snacks.picker.recent()
+          end,
+          desc = 'Open Recent File',
+        },
         { '<leader>fs', '<cmd>w<cr>', desc = 'Save Buffer' },
 
         { '<leader>g', group = 'Git' },
@@ -62,7 +74,6 @@ return {
 
         { '<leader>m', group = 'Misc' },
         { '<leader>mc', '<cmd>CheatSH<cr>', desc = 'Cht.sh' },
-        { '<leader>mh', '<cmd>Noice telescope<cr>', desc = 'Messages history' },
         { '<leader>mm', group = 'Markdown' },
         { '<leader>mmm', '<cmd>MarkdownPreview<cr>', desc = 'Preview' },
         { '<leader>mms', '<cmd>MarkdownPreviewStop<cr>', desc = 'Preview stop' },
@@ -75,12 +86,34 @@ return {
         { '<leader>qz', '<cmd>qa<cr>', desc = 'Force quit' },
 
         { '<leader>s', group = 'Search' },
-        { '<leader>sf', '<cmd>FzfLua files<cr>', desc = 'Search Files' },
-        { '<leader>sg', '<cmd>FzfLua live_grep_glob<cr>', desc = 'Search by Grep' },
-        { '<leader>sh', '<cmd>FzfLua helptags<cr>', desc = 'Search Help' },
-        { '<leader>sq', '<cmd>FzfLua diagnostics_workspace<cr>', desc = 'Search Diagnostics' },
-        { '<leader>ss', '<cmd>FzfLua lsp_document_symbols<cr>', desc = 'Search Symbols' },
-        { '<leader>sw', '<cmd>FzfLua grep_cword<cr>', desc = 'Search current Word' },
+        {
+          '<leader>sg',
+          function()
+            Snacks.picker.grep()
+          end,
+          desc = 'Search by Grep',
+        },
+        {
+          '<leader>sq',
+          function()
+            Snacks.picker.diagnostics()
+          end,
+          desc = 'Search Diagnostics',
+        },
+        {
+          '<leader>ss',
+          function()
+            Snacks.picker.diagnostics_buffer()
+          end,
+          desc = 'Search Symbols',
+        },
+        {
+          '<leader>sw',
+          function()
+            Snacks.picker.grep_word()
+          end,
+          desc = 'Search current Word',
+        },
       })
 
       wk.add({

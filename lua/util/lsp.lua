@@ -37,8 +37,21 @@ function M.on_attach(client, bufnr)
       '<cmd>lua vim.diagnostic.setloclist()<cr>',
       desc = 'Quickfix Diagnostics',
     },
-    { '<leader>lr', '<cmd>FzfLua lsp_references<cr>', desc = 'References' },
-    { '<leader>ls', '<cmd>FzfLua lsp_document_symbols<cr>', desc = 'Document Symbols' },
+    {
+      '<leader>lr',
+      function()
+        Snacks.picker.lsp_references()
+      end,
+      nowait = true,
+      desc = 'References',
+    },
+    {
+      '<leader>ls',
+      function()
+        Snacks.picker.lsp_symbols()
+      end,
+      desc = 'Document Symbols',
+    },
     { '<leader>lt', '<cmd>lua vim.lsp.buf.type_definition()<cr>', desc = 'Type Definition' },
     { '<leader>lw', group = 'workspaces' },
     {
@@ -46,7 +59,6 @@ function M.on_attach(client, bufnr)
       '<cmd>lua vim.lsp.buf.add_workspace_folder()<cr>',
       desc = 'Add Workspace Folder',
     },
-    { '<leader>lwd', '<cmd>FzfLua lsp_workspace_diagnostics<cr>', desc = 'Workspace Diagnostics' },
     {
       '<leader>lwl',
       '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<cr>',
