@@ -26,8 +26,14 @@ return {
           end,
           desc = 'Find File',
         },
-        { '<leader>fg', '<cmd>NvimTreeFindFile<cr>', desc = 'Find in tree' },
-        { '<leader>fp', '<cmd>NvimTreeToggle<cr>', desc = 'Toggle Filetree' },
+        {
+          '<leader>fg',
+          function()
+            require('util/mini-files').open_current_file()
+          end,
+          desc = 'Find in tree',
+        },
+        { '<leader>fp', '<cmd>lua MiniFiles.open()<cr>', desc = 'Toggle Filetree' },
         {
           '<leader>fr',
           function()
