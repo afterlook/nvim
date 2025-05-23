@@ -17,6 +17,8 @@ vim.loader.enable()
 -- References to ./lua/
 -- User config, mappings, etc
 require('user')
+-- Keymaps
+require('keymaps')
 -- Plugin management via Lazy
 require('lazy').setup('plugins')
 -- The line beneath this is called `modeline`. See `:help modeline`
