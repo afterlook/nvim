@@ -24,7 +24,7 @@ return {
         'terraformls',
         'bashls',
         'gopls',
-        'pylsp',
+        'basedpyright',
         'jdtls',
       },
     },
@@ -32,7 +32,7 @@ return {
   {
     'WhoIsSethDaniel/mason-tool-installer.nvim',
     opts = {
-      ensure_installed = { 'black', 'flake8', 'isort' },
+      ensure_installed = { 'ruff', 'flake8' },
     },
   },
 }
