@@ -22,7 +22,7 @@ return {
         {
           '<leader>ff',
           function()
-            Snacks.picker.files()
+            Snacks.picker.files({ hidden = true })
           end,
           desc = 'Find File',
         },
@@ -95,7 +95,7 @@ return {
         {
           '<leader>sg',
           function()
-            Snacks.picker.grep()
+            Snacks.picker.grep({ hidden = true })
           end,
           desc = 'Search by Grep',
         },
@@ -116,7 +116,7 @@ return {
         {
           '<leader>sw',
           function()
-            Snacks.picker.grep_word()
+            Snacks.picker.grep_word({ hidden = true })
           end,
           desc = 'Search current Word',
         },
