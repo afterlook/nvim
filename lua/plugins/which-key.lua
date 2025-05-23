@@ -42,6 +42,13 @@ return {
           desc = 'Open Recent File',
         },
         { '<leader>fs', '<cmd>w<cr>', desc = 'Save Buffer' },
+        {
+          '<leader>fz',
+          function()
+            Snacks.picker.zoxide()
+          end,
+          desc = 'Open project',
+        },
 
         { '<leader>g', group = 'Git' },
         { '<leader>gB', '<cmd>:GitBlameToggle<cr>', desc = 'Blame line' },
@@ -60,6 +67,13 @@ return {
         { '<leader>gc', '<cmd>G commit --signoff<cr>', desc = 'Commit buffer' },
         { '<leader>gd', gs.toggle_deleted, desc = 'Show deleted' },
         { '<leader>gl', '<cmd>G log<cr>', desc = 'Log' },
+        {
+          '<leader>gL',
+          function()
+            Snacks.lazygit.open()
+          end,
+          desc = 'Log',
+        },
         { '<leader>gn', createGitBranch, desc = 'New branch' },
         { '<leader>gp', '<cmd>G pull<cr>', desc = 'Pull' },
         { '<leader>gr', group = 'Reset' },
