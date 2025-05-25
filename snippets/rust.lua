@@ -5,13 +5,13 @@ local i = ls.insert_node
 local r = require('luasnip.extras').rep
 
 return {
-  ls.snippet({ trig = 'testmod' }, {
+  s({ trig = 'testmod' }, {
     t({ '#[cfg(test)]', 'mod tests {', '\tuse super::*;', '', '\t' }),
     i(1, { '// add tests here' }),
     t({ '', '}' }),
   }),
 
-  ls.snippet({ trig = 'testpanic' }, {
+  s({ trig = 'testpanic' }, {
     t({ '#[test]', '#[should_panic(expected = "' }),
     i(1, 'expected panic partial string'),
     t({ '")]', 'fn ' }),

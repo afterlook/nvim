@@ -1,10 +1,3 @@
-local clipboardDlvBreakpointCommandCurrentLine = function()
-  local currentLineNumber = vim.api.nvim_win_get_cursor(0)[1]
-  local relative_filepath = vim.fn.expand('%:.')
-  local breakpointString = 'break ' .. relative_filepath .. ':' .. currentLineNumber
-  vim.fn.setreg('*', breakpointString)
-end
-
 return {
   {
     'ray-x/go.nvim',
@@ -22,7 +15,6 @@ return {
     build = ':lua require("go.install").update_all_sync()',
 
     config = function()
-      local capabilities = require('blink.cmp').get_lsp_capabilities()
       require('go').setup({
 
         disable_defaults = false, -- true|false when true set false to all boolean settings and replace all tables
@@ -39,57 +31,6 @@ return {
         comment_placeholder = '', -- comment_placeholder your cool placeholder e.g. 󰟓       
         icons = { breakpoint = '🧘', currentpos = '🏃' }, -- setup to `false` to disable icons setup
         verbose = false, -- output loginf in messages
-        lsp_cfg = {
-          capabilities = capabilities,
-          on_attach = function(client, bufnr)
-            require('util/lsp').on_attach(client, bufnr)
-            require('go.lsp').gopls_on_attach(client, bufnr)
-            local wk = require('which-key')
-            wk.add({
-              { '<leader>c', group = 'Coding' },
-              { '<leader>ca', '<cmd>GoCodeAction<cr>', desc = 'Code action' },
-              {
-                '<leader>cb',
-                function()
-                  clipboardDlvBreakpointCommandCurrentLine()
-                end,
-                desc = 'Copy breakpoint',
-              },
-              { '<leader>cc', '<cmd>GoCoverage<cr>', desc = 'Test coverage' },
-              { '<leader>ch', group = 'Helper' },
-              { '<leader>cha', '<cmd>GoAddTag<cr>', desc = 'Add tags to struct' },
-              { '<leader>chc', '<cmd>GoCoverage<cr>', desc = 'Test coverage' },
-              {
-                '<leader>chg',
-                "<cmd>lua require('go.comment').gen()<cr>",
-                desc = 'Generate comment',
-              },
-              { '<leader>chi', '<cmd>GoModInit<cr>', desc = 'Go mod init' },
-              { '<leader>chr', '<cmd>GoRMTag<cr>', desc = 'Remove tags to struct' },
-              { '<leader>cht', '<cmd>GoModTidy<cr>', desc = 'Go mod tidy' },
-              { '<leader>chv', '<cmd>GoVet<cr>', desc = 'Go vet' },
-              { '<leader>ci', '<cmd>GoToggleInlay<cr>', desc = 'Toggle inlay' },
-              { '<leader>cl', '<cmd>GoLint<cr>', desc = 'Run linter' },
-              { '<leader>co', '<cmd>GoPkgOutline<cr>', desc = 'Outline' },
-              { '<leader>cr', '<cmd>GoRun<cr>', desc = 'Run' },
-              { '<leader>cs', '<cmd>GoFillStruct<cr>', desc = 'Autofill struct' },
-              { '<leader>ct', group = 'Tests' },
-              { '<leader>cta', '<cmd>GoAlt!<cr>', desc = 'Open alt file' },
-              { '<leader>ctf', '<cmd>GoTestFile<cr>', desc = 'Run test for current file' },
-              { '<leader>ctr', '<cmd>GoTest<cr>', desc = 'Run tests' },
-              { '<leader>cts', '<cmd>GoAltS!<cr>', desc = 'Open alt file in split' },
-              { '<leader>ctu', '<cmd>GoTestFunc<cr>', desc = 'Run test for current func' },
-              { '<leader>ctv', '<cmd>GoAltV!<cr>', desc = 'Open alt file in vertical split' },
-              { '<leader>cx', group = 'Code Lens' },
-              { '<leader>cxa', '<cmd>GoCodeAction<cr>', desc = 'Code Action' },
-              { '<leader>cxl', '<cmd>GoCodeLenAct<cr>', desc = 'Toggle Lens' },
-            })
-            wk.add({
-              { '<leader>c', group = 'Coding', mode = 'v' },
-              { '<leader>cj', "<cmd>'<,'>GoJson2Struct<cr>", desc = 'Json to struct', mode = 'v' },
-            })
-          end,
-        }, -- true: use non-default gopls setup specified in go/lsp.lua
         -- false: do nothing
         -- if lsp_cfg is a table, merge table with with non-default gopls setup in go/lsp.lua, e.g.
         --   lsp_cfg = {settings={gopls={matcher='CaseInsensitive', ['local'] = 'your_local_module_path', gofumpt = true }}}
@@ -182,7 +123,7 @@ return {
         },
         trouble = false, -- true: use trouble to open quickfix
         test_efm = false, -- errorfomat for quickfix, default mix mode, set to true will be efm only
-        luasnip = false, -- enable included luasnip snippets. you can also disable while add lua/snips folder to luasnip load
+        luasnip = true, -- enable included luasnip snippets. you can also disable while add lua/snips folder to luasnip load
         --  Do not enable this if you already added the path, that will duplicate the entries
         on_jobstart = function(cmd)
           _ = cmd
