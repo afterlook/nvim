@@ -38,7 +38,7 @@ vim.keymap.set('n', '<c-q>', ':bd<CR>', { silent = true })
 
 local function yankFileToClipboard()
   local filepath = vim.fn.expand('%')
-  vim.fn.setreg('*', filepath) -- write to clippoard
+  vim.fn.setreg('+y', filepath) -- write to clippoard
   print('Copied to clipboard ' .. filepath)
 end
 vim.keymap.set('n', 'gy', yankFileToClipboard, { noremap = true, silent = false })

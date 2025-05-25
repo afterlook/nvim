@@ -98,7 +98,6 @@ return {
         { '<leader>mmm', '<cmd>MarkdownPreview<cr>', desc = 'Preview' },
         { '<leader>mms', '<cmd>MarkdownPreviewStop<cr>', desc = 'Preview stop' },
         { '<leader>mp', '<cmd>PackerSync<cr>', desc = 'PackerSync' },
-        { '<leader>mt', '<cmd>ToggleTerm<cr>', desc = 'Terminal' },
 
         { '<leader>q', group = 'Quit' },
         { '<leader>qq', '<cmd>xa<cr>', desc = 'Safe Quit' },

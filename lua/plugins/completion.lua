@@ -4,8 +4,21 @@ return {
     -- optional: provides snippets for the snippet source
     dependencies = {
       'Kaiser-Yang/blink-cmp-avante',
-      'rafamadriz/friendly-snippets',
       { 'folke/lazydev.nvim', ft = 'lua' },
+      {
+        'L3MON4D3/LuaSnip',
+        version = 'v2.*',
+        build = 'make install_jsregexp', -- if you're on windows remove this line
+        dependencies = {
+          'rafamadriz/friendly-snippets',
+        },
+        config = function()
+          require('luasnip.loaders.from_vscode').lazy_load()
+          require('luasnip.loaders.from_lua').lazy_load({
+            paths = { vim.fn.stdpath('config') .. '/snippets' },
+          })
+        end,
+      },
     },
 
     -- use a release tag to download pre-built binaries
@@ -83,13 +96,29 @@ return {
           },
         },
       },
-    },
-    opts_extend = { 'sources.default' },
 
-    snippets = { preset = 'luasnip' },
-    -- ensure you have the `snippets` source (enabled by default)
-    sources = {
-      default = { 'lsp', 'path', 'snippets', 'buffer' },
+      snippets = { preset = 'luasnip' },
     },
+    config = function(_, opts)
+      require('blink.cmp').setup(opts)
+
+      local ls = require('luasnip')
+
+      vim.keymap.set({ 'i' }, '<C-K>', function()
+        ls.expand()
+      end, { silent = true })
+      vim.keymap.set({ 'i', 's' }, '<C-L>', function()
+        ls.jump(1)
+      end, { silent = true })
+      vim.keymap.set({ 'i', 's' }, '<C-J>', function()
+        ls.jump(-1)
+      end, { silent = true })
+
+      vim.keymap.set({ 'i', 's' }, '<C-E>', function()
+        if ls.choice_active() then
+          ls.change_choice(1)
+        end
+      end, { silent = true })
+    end,
   },
 }
