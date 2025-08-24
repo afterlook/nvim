@@ -34,8 +34,6 @@ vim.api.nvim_set_keymap(
   { noremap = true, silent = true }
 )
 
-vim.keymap.set('n', '<c-q>', ':bd<CR>', { silent = true })
-
 local function yankFileToClipboard()
   local filepath = vim.fn.expand('%')
   vim.fn.setreg('+y', filepath) -- write to clippoard

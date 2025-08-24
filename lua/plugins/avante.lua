@@ -33,12 +33,11 @@ return {
       windows = {
         position = 'right', -- the position of the sidebar
       },
-      -- add any opts here
-      -- for example
       provider = 'copilot',
-      copilot = {
-        -- model = 'claude-3.7-sonnet',
-        model = 'gpt-4.1',
+      providers = {
+        copilot = {
+          model = 'gpt-4.1',
+        },
       },
       highlights = {
         diff = {
