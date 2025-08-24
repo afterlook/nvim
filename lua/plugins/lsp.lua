@@ -141,10 +141,11 @@ return {
               })
             end,
             capabilities = capabilities,
-            diagnostics = {
-              globals = { 'vim' },
+            settings = {
+              gopls = {
+                buildFlags = { '-tags=integration' },
+              },
             },
-            buildFlags = { '-tags=integration' },
           })
         end,
       })
