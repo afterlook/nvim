@@ -40,3 +40,6 @@ local function yankFileToClipboard()
   print('Copied to clipboard ' .. filepath)
 end
 vim.keymap.set('n', 'gy', yankFileToClipboard, { noremap = true, silent = false })
+
+vim.keymap.set('n', '<C-u>', '<C-u>zz', { desc = 'Half page up' })
+vim.keymap.set('n', '<C-d>', '<C-d>zz', { desc = 'Half page down' })
