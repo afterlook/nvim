@@ -75,7 +75,7 @@ vim.opt.splitright = true
 set.guicursor = 'n-v-c:blinkon100'
 
 -- center cursor
-set.scrolloff = 50
+set.scrolloff = 999
 
 -- termguicolors
 vim.opt.termguicolors = true
