@@ -37,7 +37,7 @@ return {
         -- a dedicated handler.
         function(server_name) -- default handler (optional)
           if server_name ~= 'rust_analyzer' then
-            require('lspconfig')[server_name].setup({
+            vim.lsp.config(server_name, {
               on_attach = on_attach,
               capabilities = capabilities,
               diagnostics = {
@@ -53,7 +53,7 @@ return {
           table.insert(runtime_path, 'lua/?.lua')
           table.insert(runtime_path, 'lua/?/init.lua')
 
-          require('lspconfig').lua_ls.setup({
+          vim.lsp.config('lua_ls', {
             on_attach = on_attach,
             capabilities = capabilities,
             settings = {
@@ -79,7 +79,7 @@ return {
         end,
 
         ['gopls'] = function()
-          require('lspconfig').gopls.setup({
+          vim.lsp.config('gopls', {
             on_attach = function(client, bufnr)
               local clipboardDlvBreakpointCommandCurrentLine = function()
                 local currentLineNumber = vim.api.nvim_win_get_cursor(0)[1]
