@@ -37,7 +37,8 @@ return {
         -- a dedicated handler.
         function(server_name) -- default handler (optional)
           if server_name ~= 'rust_analyzer' then
-            vim.lsp.config(server_name, {
+            vim.lsp.enable('rust_analyzer')
+            vim.lsp.config('rust_analyzer', {
               on_attach = on_attach,
               capabilities = capabilities,
               diagnostics = {
@@ -53,6 +54,7 @@ return {
           table.insert(runtime_path, 'lua/?.lua')
           table.insert(runtime_path, 'lua/?/init.lua')
 
+          vim.lsp.enable('lua_ls')
           vim.lsp.config('lua_ls', {
             on_attach = on_attach,
             capabilities = capabilities,
@@ -79,6 +81,7 @@ return {
         end,
 
         ['gopls'] = function()
+          vim.lsp.enable('gopls')
           vim.lsp.config('gopls', {
             on_attach = function(client, bufnr)
               local clipboardDlvBreakpointCommandCurrentLine = function()
