@@ -1,3 +1,17 @@
+local restartLsp = function()
+  local activeLsps = vim.lsp.get_clients()
+  vim.ui.select(activeLsps, {
+    prompt = 'Select an LSP:',
+    format_item = function(item)
+      return item.name
+    end,
+  }, function(choice)
+    if choice then
+      vim.cmd('LspRestart ' .. choice.name)
+    end
+  end)
+end
+
 return {
   {
     'folke/which-key.nvim',
@@ -98,6 +112,7 @@ return {
         { '<leader>mmm', '<cmd>MarkdownPreview<cr>', desc = 'Preview' },
         { '<leader>mms', '<cmd>MarkdownPreviewStop<cr>', desc = 'Preview stop' },
         { '<leader>mp', '<cmd>PackerSync<cr>', desc = 'PackerSync' },
+        { '<leader>mr', restartLsp, desc = 'Restart LSP' },
 
         { '<leader>q', group = 'Quit' },
         { '<leader>qq', '<cmd>xa<cr>', desc = 'Safe Quit' },

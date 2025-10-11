@@ -25,6 +25,7 @@ return {
           -- }),
           nls.builtins.formatting.terraform_fmt,
           nls.builtins.formatting.black,
+          nls.builtins.formatting.mix,
           nls.builtins.diagnostics.editorconfig_checker,
 
           -- weird decision by mainteners to move formatters/diagnostics to different repos
