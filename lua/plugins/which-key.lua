@@ -77,7 +77,20 @@ return {
         { '<leader>gP', '<cmd>G push<cr>', desc = 'Push' },
         { '<leader>gS', gs.stage_buffer, desc = 'Stage buffer' },
         { '<leader>ga', '<cmd>G add .<cr>', desc = 'Add all' },
-        { '<leader>gb', '<cmd>GBranches<cr>', desc = 'Branch switch' },
+        {
+          '<leader>gb',
+          function()
+            require('util/git').checkout_branch()
+          end,
+          desc = 'Branch switch',
+        },
+        {
+          '<leader>gt',
+          function()
+            require('util/git').checkout_tag()
+          end,
+          desc = 'Branch switch',
+        },
         { '<leader>gc', '<cmd>G commit --signoff<cr>', desc = 'Commit buffer' },
         { '<leader>gd', gs.toggle_deleted, desc = 'Show deleted' },
         { '<leader>gl', '<cmd>G log<cr>', desc = 'Log' },
