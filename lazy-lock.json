@@ -11,6 +11,7 @@
   "cheat-sheet": { "branch": "main", "commit": "772556d803dbcee914902ae775cca68378bcc90a" },
   "copilot.lua": { "branch": "master", "commit": "3123983d00ae6859f8bc987d14ebb524bb41b618" },
   "dressing.nvim": { "branch": "master", "commit": "2d7c2db2507fa3c4956142ee607431ddb2828639" },
+  "flash.nvim": { "branch": "main", "commit": "fcea7ff883235d9024dc41e638f164a450c14ca2" },
   "friendly-snippets": { "branch": "main", "commit": "572f5660cf05f8cd8834e096d7b4c921ba18e175" },
   "fzf": { "branch": "master", "commit": "b852dc8a56de947c63d61d2df50298122e090a40" },
   "fzf-lsp.nvim": { "branch": "main", "commit": "16905056051759b15a388709a3fa65ff098eb243" },
