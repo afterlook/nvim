@@ -89,7 +89,7 @@ return {
           function()
             require('util/git').checkout_tag()
           end,
-          desc = 'Branch switch',
+          desc = 'Tag switch',
         },
         { '<leader>gc', '<cmd>G commit --signoff<cr>', desc = 'Commit buffer' },
         { '<leader>gd', gs.toggle_deleted, desc = 'Show deleted' },
