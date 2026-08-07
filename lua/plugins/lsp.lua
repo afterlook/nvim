@@ -40,6 +40,15 @@ return {
         },
       })
 
+      vim.lsp.config('terraformls', {
+        on_attach = on_attach,
+        capabilities = capabilities,
+        diagnostics = {
+          globals = { 'vim' },
+        },
+      })
+      vim.lsp.enable('terraformls')
+
       vim.lsp.config('expert', {
         root_dir = function(_, on_dir)
           on_dir(vim.fn.getcwd())
@@ -150,9 +159,15 @@ return {
         capabilities = capabilities,
         settings = {
           gopls = {
-            buildFlags = { '-tags=integration' },
+            buildFlags = { '-tags=integration,e2e' },
           },
         },
+      })
+
+      vim.lsp.enable('vtsls')
+      vim.lsp.config('vtsls', {
+        on_attach = on_attach,
+        capabilities = capabilities,
       })
     end,
   },

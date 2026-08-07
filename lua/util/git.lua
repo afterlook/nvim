@@ -1,5 +1,58 @@
 local M = {}
 
+-- Branch picker cache
+local _branch_cache = nil ---@type {items: table[], cwd: string, time: number}?
+local BRANCH_CACHE_TTL = 30 -- seconds; set to 0 to disable
+
+local function _parse_branches_for_each_ref(stdout, cwd)
+  local items = {}
+  for _, line in ipairs(vim.split(stdout, '\n', { trimempty = true })) do
+    local branch, head_marker, commit, msg =
+      line:match('([^\t]*)\t([^\t]*)\t([^\t]*)\t(.*)')
+    if branch and branch ~= '' then
+      table.insert(items, {
+        text = branch, -- used by the fuzzy matcher
+        branch = branch,
+        current = head_marker == '*',
+        commit = commit,
+        msg = msg,
+        cwd = cwd,
+      })
+    end
+  end
+  return items
+end
+
+local function _open_branch_picker(items)
+  Snacks.picker.pick({
+    title = 'Git Branches',
+    items = items,
+    format = 'git_branch',
+    preview = false,
+    confirm = function(picker, item)
+      _branch_cache = nil -- invalidate so next open reflects new HEAD
+      require('snacks.picker.actions').git_checkout(picker, item)
+    end,
+    win = {
+      input = {
+        keys = {
+          ['<c-a>'] = { 'git_branch_add', mode = { 'n', 'i' } },
+          ['<c-x>'] = { 'git_branch_del', mode = { 'n', 'i' } },
+        },
+      },
+    },
+    on_show = function(picker)
+      for i, item in ipairs(picker:items()) do
+        if item.current then
+          picker.list:view(i)
+          Snacks.picker.actions.list_scroll_center(picker)
+          break
+        end
+      end
+    end,
+  })
+end
+
 -- Helper: Get current tag if on a tag
 local function get_current_tag()
   local tag_output = vim.fn.system('git describe --tags --exact-match HEAD 2>/dev/null')
@@ -70,50 +123,86 @@ local function parse_branches(output)
 end
 
 function M.select_branch(cb)
-  local output = vim.fn.systemlist('git branch --all --color=never')
-  if vim.v.shell_error ~= 0 or not output or #output == 0 then
-    vim.notify('No git branches found', vim.log.levels.ERROR)
-    return
-  end
+  vim.system(
+    { 'git', 'branch', '--all', '--color=never' },
+    { text = true },
+    vim.schedule_wrap(function(result)
+      if result.code ~= 0 or not result.stdout or result.stdout == '' then
+        vim.notify('No git branches found', vim.log.levels.ERROR)
+        return
+      end
 
-  local local_branches, remote_branches, branch_map = parse_branches(output)
+      local output = vim.split(result.stdout, '\n', { trimempty = true })
+      local local_branches, remote_branches, branch_map = parse_branches(output)
 
-  if #local_branches == 0 and #remote_branches == 0 then
-    vim.notify('No branches to select', vim.log.levels.WARN)
-    return
-  end
+      if #local_branches == 0 and #remote_branches == 0 then
+        vim.notify('No branches to select', vim.log.levels.WARN)
+        return
+      end
 
-  -- Build combined list
-  local branches = {}
-  vim.list_extend(branches, local_branches)
-  if #local_branches > 0 and #remote_branches > 0 then
-    table.insert(branches, '--- Remotes ---')
-  end
-  vim.list_extend(branches, remote_branches)
+      -- Build combined list
+      local branches = {}
+      vim.list_extend(branches, local_branches)
+      if #local_branches > 0 and #remote_branches > 0 then
+        table.insert(branches, '--- Remotes ---')
+      end
+      vim.list_extend(branches, remote_branches)
 
-  vim.ui.select(branches, { prompt = 'Select git branch:', kind = 'git-branch' }, function(branch)
-    if branch and branch ~= '--- Remotes ---' and cb then
-      local canonical_name = branch_map[branch] or branch:gsub(' ★$', '')
-      cb(canonical_name)
-    end
-  end)
+      vim.ui.select(branches, { prompt = 'Select git branch:', kind = 'git-branch' }, function(branch)
+        if branch and branch ~= '--- Remotes ---' and cb then
+          local canonical_name = branch_map[branch] or branch:gsub(' ★$', '')
+          cb(canonical_name)
+        end
+      end)
+    end)
+  )
 end
 
 function M.checkout_branch()
-  M.select_branch(function(branch)
-    if not branch then
+  local cwd = vim.fn.getcwd()
+  local now = os.time()
+
+  -- Serve from cache when fresh and same directory
+  if _branch_cache
+    and _branch_cache.cwd == cwd
+    and (now - _branch_cache.time) < BRANCH_CACHE_TTL
+  then
+    _open_branch_picker(_branch_cache.items)
+    return
+  end
+
+  vim.system(
+    {
+      'git',
+      'for-each-ref',
+      '--sort=-committerdate',
+      '--format=%(refname:short)\t%(HEAD)\t%(objectname:short)\t%(contents:subject)',
+      'refs/heads/',
+    },
+    { text = true, cwd = cwd },
+    vim.schedule_wrap(function(result)
+      if result.code ~= 0 or not result.stdout or result.stdout == '' then
+        -- fallback to default snacks picker on error
+        Snacks.picker.git_branches({ preview = false })
+        return
+      end
+      local items = _parse_branches_for_each_ref(result.stdout, cwd)
+      _branch_cache = { items = items, cwd = cwd, time = os.time() }
+      _open_branch_picker(items)
+    end)
+  )
+end
+
+function M.fetch()
+  vim.system({ 'git', 'fetch' }, { text = true }, vim.schedule_wrap(function(result)
+    if result.code ~= 0 then
+      vim.notify('Failed to fetch remote branches\n' .. (result.stderr or ''), vim.log.levels.ERROR)
       return
     end
-    local remote, local_name = branch:match('([^/]+)/(.+)')
-    local checkout_target = (remote and local_name) and local_name or branch
 
-    local output = vim.fn.system({ 'git', 'checkout', checkout_target })
-    if vim.v.shell_error ~= 0 then
-      vim.notify('Failed to checkout: ' .. checkout_target .. '\n' .. output, vim.log.levels.ERROR)
-    else
-      vim.notify('Checked out branch: ' .. checkout_target, vim.log.levels.INFO)
-    end
-  end)
+    _branch_cache = nil
+    vim.notify('Fetched remote branches', vim.log.levels.INFO)
+  end))
 end
 
 function M.select_tag(cb)

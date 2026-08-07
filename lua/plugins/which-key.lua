@@ -93,6 +93,13 @@ return {
         },
         { '<leader>gc', '<cmd>G commit --signoff<cr>', desc = 'Commit buffer' },
         { '<leader>gd', gs.toggle_deleted, desc = 'Show deleted' },
+        {
+          '<leader>gf',
+          function()
+            require('util/git').fetch()
+          end,
+          desc = 'Fetch branches',
+        },
         { '<leader>gl', '<cmd>G log<cr>', desc = 'Log' },
         {
           '<leader>gL',
@@ -113,6 +120,8 @@ return {
         { '<leader>h2', "<cmd>lua require('harpoon.ui').nav_file(2)<cr>", desc = 'File 2' },
         { '<leader>h3', "<cmd>lua require('harpoon.ui').nav_file(3)<cr>", desc = 'File 3' },
         { '<leader>h4', "<cmd>lua require('harpoon.ui').nav_file(4)<cr>", desc = 'File 4' },
+        { '<leader>h5', "<cmd>lua require('harpoon.ui').nav_file(5)<cr>", desc = 'File 5' },
+        { '<leader>h6', "<cmd>lua require('harpoon.ui').nav_file(6)<cr>", desc = 'File 6' },
         { '<leader>ha', "<cmd>lua require('harpoon.mark').add_file()<cr>", desc = 'Add file' },
         { '<leader>he', "<cmd>lua require('harpoon.mark').nav_next()<cr>", desc = 'Next' },
         { '<leader>hl', '<cmd>Telescope harpoon marks<cr>', desc = 'Show marks' },

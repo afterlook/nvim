@@ -39,7 +39,13 @@ local function yankFileToClipboard()
   vim.fn.setreg('+y', filepath) -- write to clippoard
   print('Copied to clipboard ' .. filepath)
 end
+local function yankAbsolutePath()
+  local filepath = vim.fn.expand('%:p')
+  vim.fn.setreg('+y', filepath) -- write to clippoard
+  print('Copied to clipboard ' .. filepath)
+end
 vim.keymap.set('n', 'gy', yankFileToClipboard, { noremap = true, silent = false })
+vim.keymap.set('n', 'ga', yankAbsolutePath, { noremap = true, silent = false })
 
 vim.keymap.set('n', '<C-u>', '<C-u>zz', { desc = 'Half page up' })
 vim.keymap.set('n', '<C-d>', '<C-d>zz', { desc = 'Half page down' })

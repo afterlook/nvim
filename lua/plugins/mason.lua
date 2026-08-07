@@ -26,6 +26,7 @@ return {
         'gopls',
         'basedpyright',
         'jdtls',
+        'vtsls'
       },
     },
   },
