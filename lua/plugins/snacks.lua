@@ -14,5 +14,6 @@ return {
     scope = { enabled = true },
     words = { enabled = true },
     lazygit = { enabled = true },
+    indent = { enabled = true },
   },
 }

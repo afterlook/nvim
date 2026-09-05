@@ -65,7 +65,13 @@ return {
         },
 
         { '<leader>g', group = 'Git' },
-        { '<leader>gB', '<cmd>:GitBlameToggle<cr>', desc = 'Blame line' },
+        {
+          '<leader>gB',
+          function()
+            require('gitsigns').toggle_current_line_blame()
+          end,
+          desc = 'Toggle Git Blame line',
+        },
         {
           '<leader>gBB',
           function()

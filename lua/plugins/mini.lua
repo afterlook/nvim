@@ -5,5 +5,6 @@ return {
     require('mini.pairs').setup()
     require('mini.surround').setup()
     require('mini.files').setup()
+    require('mini.statusline').setup()
   end,
 }

@@ -4,8 +4,6 @@ function M.on_attach(client, bufnr)
   client.server_capabilities.document_formatting = false
   client.server_capabilities.documentFormattingProvider = false
 
-  -- enable illuminate to intelligently highlight
-  require('illuminate').on_attach(client)
   -- enable navic for displaying current code context
   if client.server_capabilities.documentSymbolProvider then
     require('nvim-navic').attach(client, bufnr)

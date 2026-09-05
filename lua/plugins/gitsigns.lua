@@ -11,6 +11,12 @@ return {
         topdelete = { text = '‾' },
         changedelete = { text = '~' },
       },
+      current_line_blame_opts = {
+        virt_text = true,
+        virt_text_pos = 'eol',
+        delay = 150,
+        ignore_whitespace = false,
+      },
     },
   },
 }

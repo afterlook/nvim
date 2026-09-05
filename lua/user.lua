@@ -126,3 +126,5 @@ vim.diagnostic.config({
 --
 -- recommendation made by avante plugin maintainer
 vim.opt.laststatus = 3
+
+vim.opt.updatetime = 200
