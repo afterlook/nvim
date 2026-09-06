@@ -18,7 +18,7 @@ function M.on_attach(client, bufnr)
       desc = 'Show implementations',
     },
     { '<leader>lR', '<cmd>lua vim.lsp.buf.rename()<cr>', desc = 'Rename' },
-    { '<leader>la', '<cmd>CodeActions<cr>', desc = 'Code Action' },
+    { '<leader>la', '<cmd>lua vim.lsp.buf.code_action()<cr>', desc = 'Code Action' },
     { '<leader>ld', '<cmd>lua vim.lsp.buf.definition()<cr>', desc = 'Go To Definition' },
     {
       '<leader>le',
