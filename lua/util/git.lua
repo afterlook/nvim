@@ -3,13 +3,18 @@ local M = {}
 -- Branch picker cache
 local _branch_cache = nil ---@type {items: table[], cwd: string, time: number}?
 local BRANCH_CACHE_TTL = 30 -- seconds; set to 0 to disable
+local _fetching = false
+local _fetching_cwd = nil
+local _refreshing_branch_cache_cwd = nil
 
 local function _parse_branches_for_each_ref(stdout, cwd)
   local items = {}
   for _, line in ipairs(vim.split(stdout, '\n', { trimempty = true })) do
-    local branch, head_marker, commit, msg =
-      line:match('([^\t]*)\t([^\t]*)\t([^\t]*)\t(.*)')
-    if branch and branch ~= '' then
+    local ref, branch, head_marker, commit, msg =
+      line:match('([^\t]*)\t([^\t]*)\t([^\t]*)\t([^\t]*)\t(.*)')
+    local is_remote = ref and ref:match('^refs/remotes/')
+    local is_remote_head = is_remote and ref:match('/HEAD$')
+    if branch and branch ~= '' and not is_remote_head then
       table.insert(items, {
         text = branch, -- used by the fuzzy matcher
         branch = branch,
@@ -17,10 +22,51 @@ local function _parse_branches_for_each_ref(stdout, cwd)
         commit = commit,
         msg = msg,
         cwd = cwd,
+        remote = is_remote,
       })
     end
   end
   return items
+end
+
+local function _refresh_branch_cache(cwd, callback)
+  vim.system(
+    {
+      'git',
+      'for-each-ref',
+      '--sort=-committerdate',
+      '--format=%(refname)\t%(refname:short)\t%(HEAD)\t%(objectname:short)\t%(contents:subject)',
+      'refs/heads/',
+      'refs/remotes/',
+    },
+    { text = true, cwd = cwd },
+    vim.schedule_wrap(function(result)
+      if result.code ~= 0 or not result.stdout or result.stdout == '' then
+        callback(nil, result)
+        return
+      end
+
+      local items = _parse_branches_for_each_ref(result.stdout, cwd)
+      _branch_cache = { items = items, cwd = cwd, time = os.time() }
+      callback(items, result)
+    end)
+  )
+end
+
+local function _checkout_remote_branch(picker, item)
+  _branch_cache = nil
+  picker:close()
+
+  vim.system({ 'git', 'checkout', '--track', item.branch }, { text = true, cwd = item.cwd }, function(result)
+    vim.schedule(function()
+      if result.code ~= 0 then
+        vim.notify('Failed to checkout ' .. item.branch .. '\n' .. (result.stderr or ''), vim.log.levels.ERROR)
+        return
+      end
+
+      vim.notify('Checked out ' .. item.branch, vim.log.levels.INFO)
+    end)
+  end)
 end
 
 local function _open_branch_picker(items)
@@ -31,6 +77,10 @@ local function _open_branch_picker(items)
     preview = false,
     confirm = function(picker, item)
       _branch_cache = nil -- invalidate so next open reflects new HEAD
+      if item.remote then
+        _checkout_remote_branch(picker, item)
+        return
+      end
       require('snacks.picker.actions').git_checkout(picker, item)
     end,
     win = {
@@ -162,46 +212,62 @@ function M.checkout_branch()
   local cwd = vim.fn.getcwd()
   local now = os.time()
 
-  -- Serve from cache when fresh and same directory
+  -- A fetch retains the last completed cache so the picker can open immediately.
   if _branch_cache
     and _branch_cache.cwd == cwd
-    and (now - _branch_cache.time) < BRANCH_CACHE_TTL
+    and (
+      (now - _branch_cache.time) < BRANCH_CACHE_TTL
+      or _fetching_cwd == cwd
+      or _refreshing_branch_cache_cwd == cwd
+    )
   then
     _open_branch_picker(_branch_cache.items)
     return
   end
 
-  vim.system(
-    {
-      'git',
-      'for-each-ref',
-      '--sort=-committerdate',
-      '--format=%(refname:short)\t%(HEAD)\t%(objectname:short)\t%(contents:subject)',
-      'refs/heads/',
-    },
-    { text = true, cwd = cwd },
-    vim.schedule_wrap(function(result)
-      if result.code ~= 0 or not result.stdout or result.stdout == '' then
-        -- fallback to default snacks picker on error
-        Snacks.picker.git_branches({ preview = false })
-        return
-      end
-      local items = _parse_branches_for_each_ref(result.stdout, cwd)
-      _branch_cache = { items = items, cwd = cwd, time = os.time() }
-      _open_branch_picker(items)
-    end)
-  )
+  -- Do not make the picker wait for, or duplicate, work started by <leader>gf.
+  if _fetching_cwd == cwd or _refreshing_branch_cache_cwd == cwd then
+    vim.notify('Branch list is refreshing; try again momentarily', vim.log.levels.INFO)
+    return
+  end
+
+  _refresh_branch_cache(cwd, function(items)
+    if not items then
+      -- Fallback to default snacks picker on error.
+      Snacks.picker.git_branches({ preview = false })
+      return
+    end
+    _open_branch_picker(items)
+  end)
 end
 
 function M.fetch()
-  vim.system({ 'git', 'fetch' }, { text = true }, vim.schedule_wrap(function(result)
+  if _fetching then
+    vim.notify('Fetch already in progress', vim.log.levels.INFO)
+    return
+  end
+
+  local cwd = vim.fn.getcwd()
+  _fetching = true
+  _fetching_cwd = cwd
+  vim.system({ 'git', 'fetch' }, { text = true, cwd = cwd }, vim.schedule_wrap(function(result)
+    _fetching = false
+    _fetching_cwd = nil
     if result.code ~= 0 then
       vim.notify('Failed to fetch remote branches\n' .. (result.stderr or ''), vim.log.levels.ERROR)
       return
     end
 
-    _branch_cache = nil
-    vim.notify('Fetched remote branches', vim.log.levels.INFO)
+    _refreshing_branch_cache_cwd = cwd
+    _refresh_branch_cache(cwd, function(items)
+      _refreshing_branch_cache_cwd = nil
+      if not items then
+        vim.notify('Fetched remote branches, but failed to refresh branch picker', vim.log.levels.WARN)
+        return
+      end
+
+      vim.notify('Fetched remote branches', vim.log.levels.INFO)
+    end)
   end))
 end
 

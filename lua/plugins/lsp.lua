@@ -31,15 +31,6 @@ return {
       local capabilities = require('blink.cmp').get_lsp_capabilities()
       local on_attach = require('util/lsp').on_attach
 
-      vim.lsp.enable('rust_analyzer')
-      vim.lsp.config('rust_analyzer', {
-        on_attach = on_attach,
-        capabilities = capabilities,
-        diagnostics = {
-          globals = { 'vim' },
-        },
-      })
-
       vim.lsp.config('terraformls', {
         on_attach = on_attach,
         capabilities = capabilities,
