@@ -155,6 +155,21 @@ return {
         },
       })
 
+      local platformio_home = vim.env.PLATFORMIO_CORE_DIR
+      if not platformio_home or platformio_home == '' then
+        platformio_home = vim.fs.joinpath(vim.fn.expand('~'), '.platformio')
+      end
+
+      vim.lsp.config('clangd', {
+        cmd = {
+          'clangd',
+          '--query-driver=' .. vim.fs.joinpath(platformio_home, 'packages', 'toolchain-*', 'bin', '*'),
+        },
+        on_attach = on_attach,
+        capabilities = capabilities,
+      })
+      vim.lsp.enable('clangd')
+
       vim.lsp.enable('vtsls')
       vim.lsp.config('vtsls', {
         on_attach = on_attach,
